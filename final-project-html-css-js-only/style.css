@@ -1,5 +1,6 @@
 * {
     background-color: rgb(151, 167, 73);
+    /* background-image: url("piano.jpg"); */
 }
 
 .music {
@@ -18,7 +19,11 @@
     border: 1px solid #aaaaaa;
 }
 
-.half {
+svg {
+    width: 100%;
+}
+
+/* .half {
     border-radius: 50%;
 }
 .quarter {
@@ -35,4 +40,4 @@ span {
     height: fit-content;
     font-size: 3rem;
     cursor: pointer;
-}
+} */

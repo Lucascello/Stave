@@ -5,82 +5,6 @@
     renderer.resize(1000, 520);
     const context = renderer.getContext();
     context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-    const quarter = document.querySelector(".quarter");
-    const eight = document.querySelector(".eight");
-    // quarter.addEventListener("click", function () {
-    //     console.log("clicking quarter note");
-
-    // });
-
-    quarter.onmousedown = function (event) {
-        let shiftX = event.clientX - quarter.getBoundingClientRect().left;
-        let shiftY = event.clientY - quarter.getBoundingClientRect().top;
-
-        quarter.style.position = "absolute";
-        quarter.style.zIndex = 1000;
-        document.body.append(quarter);
-
-        moveAt(event.pageX, event.pageY);
-
-        // moves the quarter at (pageX, pageY) coordinates
-        // taking initial shifts into account
-        function moveAt(pageX, pageY) {
-            quarter.style.left = pageX - shiftX + "px";
-            quarter.style.top = pageY - shiftY + "px";
-        }
-
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-        }
-
-        // move the quarter on mousemove
-        document.addEventListener("mousemove", onMouseMove);
-
-        // drop the quarter, remove unneeded handlers
-        quarter.onmouseup = function () {
-            document.removeEventListener("mousemove", onMouseMove);
-            quarter.onmouseup = null;
-        };
-    };
-
-    quarter.ondragstart = function () {
-        return false;
-    };
-
-    eight.onmousedown = function (event) {
-        let shiftX = event.clientX - eight.getBoundingClientRect().left;
-        let shiftY = event.clientY - eight.getBoundingClientRect().top;
-
-        eight.style.position = "absolute";
-        eight.style.zIndex = 1000;
-        document.body.append(eight);
-
-        moveAt(event.pageX, event.pageY);
-
-        // moves the eight at (pageX, pageY) coordinates
-        // taking initial shifts into account
-        function moveAt(pageX, pageY) {
-            eight.style.left = pageX - shiftX + "px";
-            eight.style.top = pageY - shiftY + "px";
-        }
-
-        function onMouseMove(event) {
-            moveAt(event.pageX, event.pageY);
-        }
-
-        // move the eight on mousemove
-        document.addEventListener("mousemove", onMouseMove);
-
-        // drop the eight, remove unneeded handlers
-        eight.onmouseup = function () {
-            document.removeEventListener("mousemove", onMouseMove);
-            eight.onmouseup = null;
-        };
-    };
-
-    eight.ondragstart = function () {
-        return false;
-    };
 
     // 5 staves with 2 bars each
     const stave1Bar1 = new VF.Stave(30, 0, 460);
@@ -298,6 +222,7 @@
 //     }
 // });
 
+////////////////////////////////////////////////////////////////
 // function createNotes() {
 //     const notes = [];
 //     console.log("...", ...arguments);
@@ -316,3 +241,80 @@
 
 //     new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
 // ];
+
+// const quarter = document.querySelector(".quarter");
+// const eight = document.querySelector(".eight");
+// quarter.addEventListener("click", function () {
+//     console.log("clicking quarter note");
+
+// });
+
+// quarter.onmousedown = function (event) {
+//     let shiftX = event.clientX - quarter.getBoundingClientRect().left;
+//     let shiftY = event.clientY - quarter.getBoundingClientRect().top;
+
+//     quarter.style.position = "absolute";
+//     quarter.style.zIndex = 1000;
+//     document.body.append(quarter);
+
+//     moveAt(event.pageX, event.pageY);
+
+//     // moves the quarter at (pageX, pageY) coordinates
+//     // taking initial shifts into account
+//     function moveAt(pageX, pageY) {
+//         quarter.style.left = pageX - shiftX + "px";
+//         quarter.style.top = pageY - shiftY + "px";
+//     }
+
+//     function onMouseMove(event) {
+//         moveAt(event.pageX, event.pageY);
+//     }
+
+//     // move the quarter on mousemove
+//     document.addEventListener("mousemove", onMouseMove);
+
+//     // drop the quarter, remove unneeded handlers
+//     quarter.onmouseup = function () {
+//         document.removeEventListener("mousemove", onMouseMove);
+//         quarter.onmouseup = null;
+//     };
+// };
+
+// quarter.ondragstart = function () {
+//     return false;
+// };
+
+// eight.onmousedown = function (event) {
+//     let shiftX = event.clientX - eight.getBoundingClientRect().left;
+//     let shiftY = event.clientY - eight.getBoundingClientRect().top;
+
+//     eight.style.position = "absolute";
+//     eight.style.zIndex = 1000;
+//     document.body.append(eight);
+
+//     moveAt(event.pageX, event.pageY);
+
+//     // moves the eight at (pageX, pageY) coordinates
+//     // taking initial shifts into account
+//     function moveAt(pageX, pageY) {
+//         eight.style.left = pageX - shiftX + "px";
+//         eight.style.top = pageY - shiftY + "px";
+//     }
+
+//     function onMouseMove(event) {
+//         moveAt(event.pageX, event.pageY);
+//     }
+
+//     // move the eight on mousemove
+//     document.addEventListener("mousemove", onMouseMove);
+
+//     // drop the eight, remove unneeded handlers
+//     eight.onmouseup = function () {
+//         document.removeEventListener("mousemove", onMouseMove);
+//         eight.onmouseup = null;
+//     };
+// };
+
+// eight.ondragstart = function () {
+//     return false;
+// };

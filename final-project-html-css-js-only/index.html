@@ -8,17 +8,244 @@
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/tone"></script>
     </head>
     <body>
         <!-- <span class="full">&#9833;</span>
         <span class="half">&#119134;</span> -->
-        <span class="quarter">&#9833;</span>
-        <span class="eight">&#9834;</span>
+        <!-- <span class="quarter">&#9833;</span>
+        <span class="eight">&#9834;</span> -->
         <!-- <span class="sixteenth">&#9833;</span>
         <span class="thirtysecond">&#9833;</span>
         <span class="sixtyfourth">&#9833;</span> -->
-        <br />
-        <br />
+        <svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http//www.w3.org/1999/xlink"
+            viewbox="0 0 1120 150"
+        >
+            <g class="octave">
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="0"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="80"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="160"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="240"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="320"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="400"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="480"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="60"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="140"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="300"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="380"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="460"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+            </g>
+            <g class="octave" transform="translate(560, 0)">
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="0"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="80"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="160"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="240"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="320"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="400"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="480"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="60"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="140"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="300"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="380"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#4B4B4B"
+                    x="460"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+            </g>
+        </svg>
+        <div id="piano"></div>
         <div class="music">
             <div id="container"></div>
         </div>
