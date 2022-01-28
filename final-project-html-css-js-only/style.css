@@ -1,0 +1,38 @@
+* {
+    background-color: rgb(151, 167, 73);
+}
+
+.music {
+    margin: 0;
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+#container svg {
+    background-color: #fff;
+    margin-top: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+.half {
+    border-radius: 50%;
+}
+.quarter {
+    background-color: rgba(247, 247, 247, 0);
+    width: 2rem;
+}
+
+.eight {
+    background-color: rgba(247, 247, 247, 0);
+    width: 2rem;
+}
+
+span {
+    height: fit-content;
+    font-size: 3rem;
+    cursor: pointer;
+}
