@@ -1,4 +1,139 @@
 (function () {
+    let numberOfOctaves = 2;
+    const octaveWidth = 560;
+    const pianoSVG = `<svg
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http//www.w3.org/1999/xlink"
+            viewbox="0 0 ${numberOfOctaves * octaveWidth} 150"
+        >
+        <g id="piano-keyboard"></g>
+        </svg>`;
+
+    const octaveKeys = `<rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="0"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="80"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="160"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="240"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="320"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="400"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key white-key"
+                    stroke="#555555"
+                    fill="#FFFFF7"
+                    x="480"
+                    y="0"
+                    width="80"
+                    height="400"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#232323"
+                    x="60"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#232323"
+                    x="140"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#232323"
+                    x="300"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#232323"
+                    x="380"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>
+                <rect
+                    class="piano-key black-key"
+                    stroke="#979797"
+                    fill="#232323"
+                    x="460"
+                    y="0"
+                    width="40"
+                    height="100"
+                ></rect>`;
+
+    const piano = document.querySelector("#piano");
+    piano.innerHTML = pianoSVG;
+    const pianoKeyboard = document.querySelector("#piano-keyboard");
+
+    for (let i = 0; i < numberOfOctaves; i++) {
+        const octave = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+        );
+        octave.classList.add("octave");
+        octave.setAttribute("transform", `translate(${i * octaveWidth}, 0) `);
+        octave.innerHTML = octaveKeys;
+        pianoKeyboard.appendChild(octave);
+    }
+
     const VF = Vex.Flow;
     const div = document.getElementById("container");
     const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
