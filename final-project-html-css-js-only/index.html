@@ -8,18 +8,20 @@
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="style.css" />
-        <script src="https://unpkg.com/tone"></script>
+        <!-- <script src="https://unpkg.com/tone"></script> -->
     </head>
     <body>
-        <!-- <span class="full">&#9833;</span>
-        <span class="half">&#119134;</span> -->
-        <!-- <span class="quarter">&#9833;</span>
-        <span class="eight">&#9834;</span> -->
-        <!-- <span class="sixteenth">&#9833;</span>
-        <span class="thirtysecond">&#9833;</span>
-        <span class="sixtyfourth">&#9833;</span> -->
         <div id="piano"></div>
-        <!-- <svg
+        <div class="music">
+            <div id="container"></div>
+        </div>
+
+        <script src="vexflow.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
+
+<!-- <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http//www.w3.org/1999/xlink"
@@ -228,6 +230,7 @@
                 ></rect>
                 <rect
                     class="piano-key black-key"
+                    data-note="c/4"
                     stroke="#979797"
                     fill="#4B4B4B"
                     x="380"
@@ -246,12 +249,3 @@
                 ></rect>
             </g>
         </svg> -->
-        <div id="piano"></div>
-        <div class="music">
-            <div id="container"></div>
-        </div>
-
-        <script src="vexflow.js"></script>
-        <script src="app.js"></script>
-    </body>
-</html>
