@@ -1,119 +1,19 @@
 (function () {
-    //////////////////// creating the piano keyboard dinamicaly ////////////////////////////
+    const keyss = document.querySelectorAll(".key");
 
-    let numberOfOctaves = 2;
-    const octaveWidth = 560;
-    const pianoSVG = `<svg
-            version="1.1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http//www.w3.org/1999/xlink"
-            viewbox="0 0 ${numberOfOctaves * octaveWidth} 150"
-        >
-        <g id="piano-keyboard"></g>
-        </svg>`;
+    keyss.forEach((key) => {
+        key.addEventListener("click", () => playNote(key));
+    });
 
-    const whiteNotes = ["c", "d", "e", "f", "g", "a", "b"];
-    const range = ["c4", "b5"];
-
-    const piano = document.querySelector("#piano");
-
-    const keyboard = {
-        keyboardSetup() {
-            //Add SVG to piano div
-            piano.innerHTML = pianoSVG;
-            const pianoKeyboard = document.querySelector("#piano-keyboard");
-
-            //Cretae Octaves
-            for (let i = 0; i < numberOfOctaves; i++) {
-                const octave = utilities.createSVGElement("g");
-                octave.classList.add("octave");
-                octave.setAttribute(
-                    "transform",
-                    `translate(${i * octaveWidth}, 0)`
-                );
-
-                let naturalKeyPositionX = 0;
-                let sharpKeyPositionX = 60;
-
-                // Add keys for white notes
-                for (let j = 0; j < 7; j++) {
-                    const naturalKey = utilities.createSVGElement("rect");
-                    naturalKey.classList.add("white-key");
-                    naturalKey.setAttribute("x", naturalKeyPositionX);
-                    naturalKey.setAttribute("width", 80);
-                    naturalKey.setAttribute("height", 151);
-                    naturalKey.setAttribute("stroke", "#232323");
-                    naturalKey.setAttribute("fill", "#FFFFF7");
-                    naturalKeyPositionX += 80;
-                    octave.appendChild(naturalKey);
-                }
-                //Add keys for black notes
-                for (let k = 0; k < 5; k++) {
-                    const sharpKey = utilities.createSVGElement("rect");
-                    sharpKey.classList.add("white-key");
-                    sharpKey.setAttribute("x", sharpKeyPositionX);
-                    sharpKey.setAttribute("width", 40);
-                    sharpKey.setAttribute("height", 100);
-                    sharpKey.setAttribute("stroke", "#252424");
-                    sharpKey.setAttribute("fill", "#101010");
-
-                    if (k === 1) {
-                        sharpKeyPositionX += 160;
-                    } else {
-                        sharpKeyPositionX += 80;
-                    }
-
-                    octave.appendChild(sharpKey);
-                }
-                pianoKeyboard.appendChild(octave);
-            }
-        },
-        getAllWhiteNotes([firstNote, lastNote]) {
-            //Which octave and note
-            const firstNoteName = firstNote[0];
-            const firstOctaveNumber = parseInt(firstNote[1]);
-            // console.log("firstOctaveNumber", firstOctaveNumber);
-
-            const lastNoteName = lastNote[0];
-            const lastOctaveNumber = parseInt(lastNote[1]);
-            console.log("lastOctaveNumber", lastOctaveNumber);
-
-            const firstNotePosition = whiteNotes.indexOf(firstNoteName);
-            const lastNotePosition = whiteNotes.indexOf(lastNoteName);
-            console.log(
-                " these are firstNotePosition, lastNotePosition",
-                firstNotePosition,
-                lastNotePosition
-            );
-
-            const allWhiteNotes = [];
-            for (
-                let octaveNumber = firstOctaveNumber;
-                octaveNumber <= lastOctaveNumber;
-                octaveNumber++
-            ) {
-                allWhiteNotes.push(
-                    whiteNotes.map((notename) => {
-                        return notename + "/" + octaveNumber;
-                    })
-                );
-            }
-            console.log("allWhiteNotes", allWhiteNotes);
-        },
-    };
-
-    const utilities = {
-        createSVGElement(e) {
-            const element = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                e
-            );
-            return element;
-        },
-    };
-
-    keyboard.keyboardSetup();
-    keyboard.getAllWhiteNotes(range);
+    function playNote(key) {
+        const noteAudio = document.getElementById(key.dataset.note);
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+        key.classList.add("active");
+        noteAudio.addEventListener("ended", () => {
+            key.classList.remove("active");
+        });
+    }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
     const VF = Vex.Flow;
@@ -124,36 +24,36 @@
     context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
 
     // 5 staves with 2 bars each
-    const stave1Bar1 = new VF.Stave(30, 0, 460);
-    stave1Bar1.addClef("treble").addTimeSignature("4/4");
-    stave1Bar1.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
-    stave1Bar1.setContext(context).draw();
-    const stave1Bar2 = new VF.Stave(490, 0, 460);
-    stave1Bar2.setContext(context).draw();
-    const stave2Bar1 = new VF.Stave(30, 100, 460);
-    stave2Bar1.addClef("treble");
-    stave2Bar1.setContext(context).draw();
-    const stave2Bar2 = new VF.Stave(490, 100, 460);
-    stave2Bar2.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
-    stave2Bar2.setContext(context).draw();
-    const stave3Bar1 = new VF.Stave(30, 200, 460);
-    stave3Bar1.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
-    stave3Bar1.addClef("treble");
-    stave3Bar1.setContext(context).draw();
-    const stave3Bar2 = new VF.Stave(490, 200, 460);
-    stave3Bar2.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
-    stave3Bar2.setContext(context).draw();
-    const stave4Bar1 = new VF.Stave(30, 300, 460);
-    stave4Bar1.addClef("treble");
-    stave4Bar1.setContext(context).draw();
-    const stave4Bar2 = new VF.Stave(490, 300, 460);
-    stave4Bar2.setContext(context).draw();
-    const stave5Bar1 = new VF.Stave(30, 400, 460);
-    stave5Bar1.addClef("treble");
-    stave5Bar1.setContext(context).draw();
-    const stave5Bar2 = new VF.Stave(490, 400, 460);
-    stave5Bar2.setEndBarType(Vex.Flow.Barline.type.END);
-    stave5Bar2.setContext(context).draw();
+    const bar1 = new VF.Stave(30, 0, 460);
+    bar1.addClef("treble").addTimeSignature("4/4");
+    bar1.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
+    bar1.setContext(context).draw();
+    const bar2 = new VF.Stave(490, 0, 460);
+    bar2.setContext(context).draw();
+    const bar3 = new VF.Stave(30, 100, 460);
+    bar3.addClef("treble");
+    bar3.setContext(context).draw();
+    const bar4 = new VF.Stave(490, 100, 460);
+    bar4.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
+    bar4.setContext(context).draw();
+    const bar5 = new VF.Stave(30, 200, 460);
+    bar5.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
+    bar5.addClef("treble");
+    bar5.setContext(context).draw();
+    const bar6 = new VF.Stave(490, 200, 460);
+    bar6.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
+    bar6.setContext(context).draw();
+    const bar7 = new VF.Stave(30, 300, 460);
+    bar7.addClef("treble");
+    bar7.setContext(context).draw();
+    const bar8 = new VF.Stave(490, 300, 460);
+    bar8.setContext(context).draw();
+    const bar9 = new VF.Stave(30, 400, 460);
+    bar9.addClef("treble");
+    bar9.setContext(context).draw();
+    const bar10 = new VF.Stave(490, 400, 460);
+    bar10.setEndBarType(Vex.Flow.Barline.type.END);
+    bar10.setContext(context).draw();
 
     ///////////////////////////  bar 1 /////////////////////////////////////////
     // const notes1 = [
@@ -171,9 +71,9 @@
     //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
     // ];
 
-    function createNotes() {
+    function createNotesToInsertInTheBar() {
         const notes = [];
-        console.log("...", ...arguments);
+        console.log("My notes to add to the bar", ...arguments);
         for (index in arguments) {
             const arg = arguments[index];
             notes.push(
@@ -184,7 +84,7 @@
         return notes;
     }
 
-    const notes1 = createNotes(
+    const notes1 = createNotesToInsertInTheBar(
         { keys: "c/4", duration: "q" },
         { keys: "c/4", duration: "q" },
         { keys: "g/4", duration: "q" },
@@ -196,12 +96,12 @@
     voice1.addTickables(notes1);
 
     // Format and justify the notes to 400 pixels.
-    const formatter = new VF.Formatter()
+    const formatter1 = new VF.Formatter()
         .joinVoices([voice1])
         .format([voice1], 400);
 
     // Render voice1
-    voice1.draw(context, stave1Bar1);
+    voice1.draw(context, bar1);
 
     //////////////////////////// bar 2 /////////////////////////////////////
     const notes2 = [
@@ -215,11 +115,11 @@
     const voice2 = new VF.Voice({ num_beats: 4, beat_value: 4 });
     voice2.addTickables(notes2);
 
-    const formatter1 = new VF.Formatter()
+    const formatter2 = new VF.Formatter()
         .joinVoices([voice2])
         .format([voice2], 400);
 
-    voice2.draw(context, stave1Bar2);
+    voice2.draw(context, bar2);
 
     //////////////////////////// bar 3 ////////////////////////////////////
     const notes3 = [
@@ -235,11 +135,11 @@
     const voice3 = new VF.Voice({ num_beats: 4, beat_value: 4 });
     voice3.addTickables(notes3);
 
-    const formatter2 = new VF.Formatter()
+    const formatter3 = new VF.Formatter()
         .joinVoices([voice3])
         .format([voice3], 400);
 
-    voice3.draw(context, stave2Bar1);
+    voice3.draw(context, bar3);
 
     //////////////////////////// bar 4 /////////////////////////////////////
     const notes4 = [
@@ -253,11 +153,11 @@
     const voice4 = new VF.Voice({ num_beats: 4, beat_value: 4 });
     voice4.addTickables(notes4);
 
-    const formatter3 = new VF.Formatter()
+    const formatter4 = new VF.Formatter()
         .joinVoices([voice4])
         .format([voice4], 400);
 
-    voice4.draw(context, stave2Bar2);
+    voice4.draw(context, bar4);
 
     //////////////////////////// bar 5 ////////////////////////////////////
     const notes5 = [
@@ -273,11 +173,11 @@
     const voice5 = new VF.Voice({ num_beats: 4, beat_value: 4 });
     voice5.addTickables(notes5);
 
-    const formatter4 = new VF.Formatter()
+    const formatter5 = new VF.Formatter()
         .joinVoices([voice5])
         .format([voice5], 400);
 
-    voice5.draw(context, stave3Bar1);
+    voice5.draw(context, bar5);
 
     //////////////////////////// bar 6 /////////////////////////////////////
     const notes6 = [
@@ -291,35 +191,35 @@
     const voice6 = new VF.Voice({ num_beats: 4, beat_value: 4 });
     voice6.addTickables(notes6);
 
-    const formatter5 = new VF.Formatter()
+    const formatter6 = new VF.Formatter()
         .joinVoices([voice6])
         .format([voice6], 400);
 
-    voice6.draw(context, stave3Bar2);
+    voice6.draw(context, bar6);
 
     ////////////////////////////////bar 7 /////////////////////////////////////
     notes1;
     voice1;
-    formatter;
-    voice1.draw(context, stave4Bar1);
+    formatter1;
+    voice1.draw(context, bar7);
 
     //////////////////////////////// bar 8 ////////////////////////////////////
     notes2;
     voice2;
-    formatter1;
-    voice2.draw(context, stave4Bar2);
+    formatter2;
+    voice2.draw(context, bar8);
 
     ////////////////////////////////bar 9 /////////////////////////////////////
     notes3;
     voice3;
-    formatter2;
-    voice3.draw(context, stave5Bar1);
+    formatter3;
+    voice3.draw(context, bar9);
 
     ////////////////////////////////bar 10 /////////////////////////////////////
     notes4;
     voice4;
-    formatter3;
-    voice4.draw(context, stave5Bar2);
+    formatter4;
+    voice4.draw(context, bar10);
 })();
 
 // const map = new Map([
@@ -339,32 +239,7 @@
 //     }
 // });
 
-////////////////////////////////////////////////////////////////
-// function createNotes() {
-//     const notes = [];
-//     console.log("...", ...arguments);
-//     for (arg in arguments) {
-//         notes.push(
-//             new VF.StaveNote({ keys: [arg.keys], duration: arg.duration })
-//         );
-//     }
-//     return notes;
-// }
-
-// const notes6 = [
-//     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
-
-//     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
-
-//     new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
-// ];
-
-// const quarter = document.querySelector(".quarter");
-// const eight = document.querySelector(".eight");
-// quarter.addEventListener("click", function () {
-//     console.log("clicking quarter note");
-
-// });
+//////////////////////////////////////////////////////////////////////////
 
 // quarter.onmousedown = function (event) {
 //     let shiftX = event.clientX - quarter.getBoundingClientRect().left;
@@ -401,54 +276,142 @@
 //     return false;
 // };
 
-// eight.onmousedown = function (event) {
-//     let shiftX = event.clientX - eight.getBoundingClientRect().left;
-//     let shiftY = event.clientY - eight.getBoundingClientRect().top;
-
-//     eight.style.position = "absolute";
-//     eight.style.zIndex = 1000;
-//     document.body.append(eight);
-
-//     moveAt(event.pageX, event.pageY);
-
-//     // moves the eight at (pageX, pageY) coordinates
-//     // taking initial shifts into account
-//     function moveAt(pageX, pageY) {
-//         eight.style.left = pageX - shiftX + "px";
-//         eight.style.top = pageY - shiftY + "px";
-//     }
-
-//     function onMouseMove(event) {
-//         moveAt(event.pageX, event.pageY);
-//     }
-
-//     // move the eight on mousemove
-//     document.addEventListener("mousemove", onMouseMove);
-
-//     // drop the eight, remove unneeded handlers
-//     eight.onmouseup = function () {
-//         document.removeEventListener("mousemove", onMouseMove);
-//         eight.onmouseup = null;
-//     };
-// };
-
-// eight.ondragstart = function () {
-//     return false;
-// };
+//////////////////////////////////////////////////////////////////
 
 // function createKeyNotes(note, range) {
 //     //return octaveKeys
 // }
 
-// function createKeyboard(note, range, numberOfOctaves) {
-//     for (let i = 0; i < numberOfOctaves; i++) {
-//         const octave = document.createElementNS(
-//             "http://www.w3.org/2000/svg",
-//             "g"
-//         );
-//         octave.classList.add("octave");
-//         octave.setAttribute("transform", `translate(${i * octaveWidth}, 0) `);
-//         octave.innerHTML = createKeyNotes(note, range + i);
-//         pianoKeyboard.appendChild(octave);
+////////////////////////////////////////////////////////////////
+
+// function drawNotesInTheBar() {
+//     const voice = 0;
+//     const formatter = 0;
+
+//     for (let i = 0; i <= 10; i++) {
+//         voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
+//         voice[i].addTickables(notes1);
+//         formatter[i] = new VF.Formatter()
+//             .joinVoices([voice[i]])
+//             .format([voice[i]], 400);
+//         voice[i].draw(context, bar1);
 //     }
 // }
+
+// drawNotesInTheBar();
+
+//////////////////// creating the piano keyboard dinamicaly ////////////////////////////
+
+// let numberOfOctaves = 3;
+// const octaveWidth = 560;
+// const pianoSVG = `<svg
+//         version="1.1"
+//         xmlns="http://www.w3.org/2000/svg"
+//         xmlns:xlink="http//www.w3.org/1999/xlink"
+//         viewbox="0 0 ${numberOfOctaves * octaveWidth} 150"
+//     >
+//     <g id="piano-keyboard"></g>
+//     </svg>`;
+
+// const whiteNotes = ["c", "d", "e", "f", "g", "a", "b"];
+// const range = ["c3", "b5"];
+
+// const piano = document.querySelector("#piano");
+
+// const keyboard = {
+//     keyboardSetup() {
+//         //Add SVG to piano div
+//         piano.innerHTML = pianoSVG;
+//         const pianoKeyboard = document.querySelector("#piano-keyboard");
+
+//         //Cretae Octaves
+//         for (let i = 0; i < numberOfOctaves; i++) {
+//             const octave = utilities.createSVGElement("g");
+//             octave.classList.add("octave");
+//             octave.setAttribute(
+//                 "transform",
+//                 `translate(${i * octaveWidth}, 0)`
+//             );
+
+//             let naturalKeyPositionX = 0;
+//             let sharpKeyPositionX = 60;
+
+//             // Add keys for white notes
+//             for (let j = 0; j < 7; j++) {
+//                 const naturalKey = utilities.createSVGElement("rect");
+//                 naturalKey.classList.add("white-key");
+//                 naturalKey.setAttribute("x", naturalKeyPositionX);
+//                 naturalKey.setAttribute("width", 80);
+//                 naturalKey.setAttribute("height", 151);
+//                 naturalKey.setAttribute("stroke", "#232323");
+//                 naturalKey.setAttribute("fill", "#FFFFF7");
+//                 naturalKeyPositionX += 80;
+//                 octave.appendChild(naturalKey);
+//             }
+//             //Add keys for black notes
+//             for (let k = 0; k < 5; k++) {
+//                 const sharpKey = utilities.createSVGElement("rect");
+//                 sharpKey.classList.add("white-key");
+//                 sharpKey.setAttribute("x", sharpKeyPositionX);
+//                 sharpKey.setAttribute("width", 40);
+//                 sharpKey.setAttribute("height", 100);
+//                 sharpKey.setAttribute("stroke", "#252424");
+//                 sharpKey.setAttribute("fill", "#101010");
+
+//                 if (k === 1) {
+//                     sharpKeyPositionX += 160;
+//                 } else {
+//                     sharpKeyPositionX += 80;
+//                 }
+
+//                 octave.appendChild(sharpKey);
+//             }
+//             pianoKeyboard.appendChild(octave);
+//         }
+//     },
+//     getAllWhiteNotes([firstNote, lastNote]) {
+//         //Which octave and note
+//         const firstNoteName = firstNote[0];
+//         const firstOctaveNumber = parseInt(firstNote[1]);
+//         // console.log("firstOctaveNumber", firstOctaveNumber);
+
+//         const lastNoteName = lastNote[0];
+//         const lastOctaveNumber = parseInt(lastNote[1]);
+//         console.log("lastOctaveNumber", lastOctaveNumber);
+
+//         const firstNotePosition = whiteNotes.indexOf(firstNoteName);
+//         const lastNotePosition = whiteNotes.indexOf(lastNoteName);
+//         console.log(
+//             " these are firstNotePosition, lastNotePosition",
+//             firstNotePosition,
+//             lastNotePosition
+//         );
+
+//         const allWhiteNotes = [];
+//         for (
+//             let octaveNumber = firstOctaveNumber;
+//             octaveNumber <= lastOctaveNumber;
+//             octaveNumber++
+//         ) {
+//             allWhiteNotes.push(
+//                 whiteNotes.map((notename) => {
+//                     return notename + "/" + octaveNumber;
+//                 })
+//             );
+//         }
+//         console.log("allWhiteNotes", allWhiteNotes);
+//     },
+// };
+
+// const utilities = {
+//     createSVGElement(e) {
+//         const element = document.createElementNS(
+//             "http://www.w3.org/2000/svg",
+//             e
+//         );
+//         return element;
+//     },
+// };
+
+// keyboard.keyboardSetup();
+// keyboard.getAllWhiteNotes(range);
