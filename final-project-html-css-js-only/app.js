@@ -1,5 +1,6 @@
 (function () {
     const keyss = document.querySelectorAll(".key");
+    const notess = document.querySelectorAll(".note");
 
     keyss.forEach((key) => {
         key.addEventListener("click", () => playNote(key));
@@ -13,6 +14,14 @@
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
         });
+    }
+
+    notess.forEach((note) => {
+        note.addEventListener("click", () => highlightNote(note));
+    });
+
+    function highlightNote(note) {
+        note.classList.toggle("active");
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
