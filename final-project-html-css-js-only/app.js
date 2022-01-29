@@ -25,34 +25,37 @@
 
             //Cretae Octaves
             for (let i = 0; i < numberOfOctaves; i++) {
-                const octave = this.createOctave(i);
+                const octave = utilities.createSVGElement("g");
+                octave.classList.add("octave");
+                octave.setAttribute(
+                    "transform",
+                    `translate(${i * octaveWidth}, 0)`
+                );
 
                 let naturalKeyPositionX = 0;
                 let sharpKeyPositionX = 60;
 
-                // Add keys for natural notes
+                // Add keys for white notes
                 for (let j = 0; j < 7; j++) {
-                    const naturalKey = this.createIndividualKeys({
-                        classname: "white-key",
-                        width: 80,
-                        height: 151,
-                        stroke: "#232323",
-                        fill: "#FFFFF7",
-                    });
+                    const naturalKey = utilities.createSVGElement("rect");
+                    naturalKey.classList.add("white-key");
                     naturalKey.setAttribute("x", naturalKeyPositionX);
+                    naturalKey.setAttribute("width", 80);
+                    naturalKey.setAttribute("height", 151);
+                    naturalKey.setAttribute("stroke", "#232323");
+                    naturalKey.setAttribute("fill", "#FFFFF7");
                     naturalKeyPositionX += 80;
                     octave.appendChild(naturalKey);
                 }
-                //Add sharp/flat keys
+                //Add keys for black notes
                 for (let k = 0; k < 5; k++) {
-                    const sharpKey = this.createIndividualKeys({
-                        classname: "black-key",
-                        width: 40,
-                        height: 100,
-                        stroke: "#252424",
-                        fill: "#101010",
-                    });
+                    const sharpKey = utilities.createSVGElement("rect");
+                    sharpKey.classList.add("white-key");
                     sharpKey.setAttribute("x", sharpKeyPositionX);
+                    sharpKey.setAttribute("width", 40);
+                    sharpKey.setAttribute("height", 100);
+                    sharpKey.setAttribute("stroke", "#252424");
+                    sharpKey.setAttribute("fill", "#101010");
 
                     if (k === 1) {
                         sharpKeyPositionX += 160;
@@ -64,24 +67,6 @@
                 }
                 pianoKeyboard.appendChild(octave);
             }
-        },
-        createIndividualKeys({ classname, width, height, stroke, fill }) {
-            const key = utilities.createSVGElement("rect");
-            key.classList.add(classname);
-            key.setAttribute("width", width);
-            key.setAttribute("height", height);
-            key.setAttribute("stroke", stroke);
-            key.setAttribute("fill", fill);
-            return key;
-        },
-        createOctave(octaveNumber) {
-            const octave = utilities.createSVGElement("g");
-            octave.classList.add("octave");
-            octave.setAttribute(
-                "transform",
-                `translate(${octaveNumber * octaveWidth}, 0)`
-            );
-            return octave;
         },
         getAllWhiteNotes([firstNote, lastNote]) {
             //Which octave and note
@@ -236,11 +221,6 @@
 
     voice2.draw(context, stave1Bar2);
 
-    // function drawNotesToBar(notes) {
-    //     const voice = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    //     voice.addTickables(notes);
-    //     voice.draw(context, stave1Bar2);
-    // }
     //////////////////////////// bar 3 ////////////////////////////////////
     const notes3 = [
         new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
