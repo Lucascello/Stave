@@ -12,6 +12,9 @@
         <g id="piano-keyboard"></g>
         </svg>`;
 
+    const whiteNotes = ["c", "d", "e", "f", "g", "a", "b"];
+    const range = ["c4", "b5"];
+
     const piano = document.querySelector("#piano");
 
     const keyboard = {
@@ -29,25 +32,27 @@
 
                 // Add keys for natural notes
                 for (let j = 0; j < 7; j++) {
-                    const naturalKey = utilities.createSVGElement("rect");
-                    naturalKey.classList.add("white-key");
+                    const naturalKey = this.createIndividualKeys({
+                        classname: "white-key",
+                        width: 80,
+                        height: 151,
+                        stroke: "#232323",
+                        fill: "#FFFFF7",
+                    });
                     naturalKey.setAttribute("x", naturalKeyPositionX);
-                    naturalKey.setAttribute("width", 80);
-                    naturalKey.setAttribute("height", 151);
-                    naturalKey.setAttribute("stroke", "#232323");
-                    naturalKey.setAttribute("fill", "#FFFFF7");
                     naturalKeyPositionX += 80;
                     octave.appendChild(naturalKey);
                 }
                 //Add sharp/flat keys
                 for (let k = 0; k < 5; k++) {
-                    const sharpKey = utilities.createSVGElement("rect");
-                    sharpKey.classList.add("white-key");
+                    const sharpKey = this.createIndividualKeys({
+                        classname: "black-key",
+                        width: 40,
+                        height: 100,
+                        stroke: "#252424",
+                        fill: "#101010",
+                    });
                     sharpKey.setAttribute("x", sharpKeyPositionX);
-                    sharpKey.setAttribute("width", 40);
-                    sharpKey.setAttribute("height", 100);
-                    sharpKey.setAttribute("stroke", "#252424");
-                    sharpKey.setAttribute("fill", "#101010");
 
                     if (k === 1) {
                         sharpKeyPositionX += 160;
@@ -60,6 +65,15 @@
                 pianoKeyboard.appendChild(octave);
             }
         },
+        createIndividualKeys({ classname, width, height, stroke, fill }) {
+            const key = utilities.createSVGElement("rect");
+            key.classList.add(classname);
+            key.setAttribute("width", width);
+            key.setAttribute("height", height);
+            key.setAttribute("stroke", stroke);
+            key.setAttribute("fill", fill);
+            return key;
+        },
         createOctave(octaveNumber) {
             const octave = utilities.createSVGElement("g");
             octave.classList.add("octave");
@@ -68,6 +82,38 @@
                 `translate(${octaveNumber * octaveWidth}, 0)`
             );
             return octave;
+        },
+        getAllWhiteNotes([firstNote, lastNote]) {
+            //Which octave and note
+            const firstNoteName = firstNote[0];
+            const firstOctaveNumber = parseInt(firstNote[1]);
+            // console.log("firstOctaveNumber", firstOctaveNumber);
+
+            const lastNoteName = lastNote[0];
+            const lastOctaveNumber = parseInt(lastNote[1]);
+            console.log("lastOctaveNumber", lastOctaveNumber);
+
+            const firstNotePosition = whiteNotes.indexOf(firstNoteName);
+            const lastNotePosition = whiteNotes.indexOf(lastNoteName);
+            console.log(
+                " these are firstNotePosition, lastNotePosition",
+                firstNotePosition,
+                lastNotePosition
+            );
+
+            const allWhiteNotes = [];
+            for (
+                let octaveNumber = firstOctaveNumber;
+                octaveNumber <= lastOctaveNumber;
+                octaveNumber++
+            ) {
+                allWhiteNotes.push(
+                    whiteNotes.map((notename) => {
+                        return notename + "/" + octaveNumber;
+                    })
+                );
+            }
+            console.log("allWhiteNotes", allWhiteNotes);
         },
     };
 
@@ -82,6 +128,7 @@
     };
 
     keyboard.keyboardSetup();
+    keyboard.getAllWhiteNotes(range);
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
     const VF = Vex.Flow;
