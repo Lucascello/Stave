@@ -1,6 +1,8 @@
 (function () {
     const keyss = document.querySelectorAll(".key");
     const notess = document.querySelectorAll(".note");
+    let currentAudio;
+    let duration;
 
     keyss.forEach((key) => {
         key.addEventListener("click", () => playNote(key));
@@ -9,7 +11,11 @@
     function playNote(key) {
         const noteAudio = document.getElementById(key.dataset.note);
         noteAudio.currentTime = 0;
+        if (currentAudio) {
+            currentAudio.pause();
+        }
         noteAudio.play();
+        currentAudio = noteAudio;
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
@@ -21,7 +27,18 @@
     });
 
     function highlightNote(note) {
-        note.classList.toggle("active");
+        if (note.classList.contains("active")) {
+            duration = undefined;
+            note.classList.toggle("active");
+            console.log("duration to toggle:", duration);
+            return;
+        }
+        duration = note.dataset.duration;
+        document.querySelectorAll(".note").forEach((el) => {
+            el.classList.remove("active");
+        });
+        note.classList.add("active");
+        console.log("note duration:", duration);
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////

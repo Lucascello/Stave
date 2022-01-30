@@ -11,7 +11,7 @@
         <script src="audiosynth.js"></script>
     </head>
     <body>
-        <div class="key">
+        <div class="keyboard">
             <div id="piano">
                 <div data-note="c3" class="key white"></div>
                 <div data-note="db3" class="key black"></div>
@@ -92,11 +92,15 @@
         <div class="music">
             <div id="container"></div>
             <div class="notes">
-                <img class="whole note" src="whole.png" />
-                <img class="half note" src="half.png" />
-                <img class="quarter note" src="quarter.png" />
-                <img class="eight note" src="eight.png" />
-                <img class="sixteenth note" src="sixteenth.png" />
+                <img data-duration="w" class="whole note" src="whole.png" />
+                <img data-duration="h" class="half note" src="half.png" />
+                <img data-duration="q" class="quarter note" src="quarter.png" />
+                <img data-duration="8" class="eight note" src="eight.png" />
+                <img
+                    data-duration="16"
+                    class="sixteenth note"
+                    src="sixteenth.png"
+                />
             </div>
         </div>
 
