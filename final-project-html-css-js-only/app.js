@@ -9,7 +9,7 @@
     });
 
     function playNote(key) {
-        const noteAudio = document.getElementById(key.dataset.symbol);
+        const noteAudio = document.getElementById(key.dataset.note);
         noteAudio.currentTime = 0;
         if (currentAudio) {
             currentAudio.pause();
@@ -17,11 +17,11 @@
             for (let sib of siblings) {
                 sib.classList.remove("active");
             }
-            // console.log("last symbol played before current one: ", currentAudio);
+            // console.log("last note played before current one: ", currentAudio);
         }
         noteAudio.play();
         currentAudio = noteAudio;
-        console.log("symbol I'm Playing: ", currentAudio);
+        console.log("note I'm Playing: ", currentAudio);
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
