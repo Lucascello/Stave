@@ -56,7 +56,7 @@
     background-color: #424141;
 }
 
-.notes {
+.symbols {
     height: 75vh;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@
     align-items: center;
 }
 
-.note.active {
+.symbol.active {
     background-color: rgb(105, 117, 49);
 }
 

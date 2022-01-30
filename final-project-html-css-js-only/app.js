@@ -1,6 +1,6 @@
 (function () {
     const keyss = document.querySelectorAll(".key");
-    const notess = document.querySelectorAll(".note");
+    const symbols = document.querySelectorAll(".symbol");
     let currentAudio;
     let duration;
 
@@ -9,7 +9,7 @@
     });
 
     function playNote(key) {
-        const noteAudio = document.getElementById(key.dataset.note);
+        const noteAudio = document.getElementById(key.dataset.symbol);
         noteAudio.currentTime = 0;
         if (currentAudio) {
             currentAudio.pause();
@@ -17,33 +17,33 @@
             for (let sib of siblings) {
                 sib.classList.remove("active");
             }
-            // console.log("last note played before current one: ", currentAudio);
+            // console.log("last symbol played before current one: ", currentAudio);
         }
         noteAudio.play();
         currentAudio = noteAudio;
-        console.log("note I'm Playing: ", currentAudio);
+        console.log("symbol I'm Playing: ", currentAudio);
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
         });
     }
 
-    notess.forEach((note) => {
-        note.addEventListener("click", () => highlightNote(note));
+    symbols.forEach((symbol) => {
+        symbol.addEventListener("click", () => highlightNote(symbol));
     });
 
-    function highlightNote(note) {
-        if (note.classList.contains("active")) {
+    function highlightNote(symbol) {
+        if (symbol.classList.contains("active")) {
             duration = undefined;
-            note.classList.toggle("active");
+            symbol.classList.toggle("active");
             // console.log("duration to toggle:", duration);
             return;
         }
-        duration = note.dataset.duration;
-        document.querySelectorAll(".note").forEach((el) => {
+        duration = symbol.dataset.duration;
+        document.querySelectorAll(".symbol").forEach((el) => {
             el.classList.remove("active");
         });
-        note.classList.add("active");
+        symbol.classList.add("active");
         // console.log("note duration:", duration);
     }
 
@@ -319,8 +319,7 @@
 // function drawNotesInTheBar() {
 //     let voice = [];
 //     let formatter = [];
-//      let bar = [];
-
+//  let bar = [];
 //     for (let i = 0; i <= 10; i++) {
 //         voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
 //         voice[i].addTickables(notes1);
