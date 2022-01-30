@@ -2,10 +2,15 @@
     const keyss = document.querySelectorAll(".key");
     const symbols = document.querySelectorAll(".symbol");
     let currentAudio;
-    let duration;
+    let duration = "q";
+    let temporary = [];
+    let currentBar = 1;
 
     keyss.forEach((key) => {
-        key.addEventListener("click", () => playNote(key));
+        key.addEventListener("click", () => {
+            playNote(key);
+            addNoteToBar(key);
+        });
     });
 
     function playNote(key) {
@@ -33,18 +38,38 @@
     });
 
     function highlightNote(symbol) {
-        if (symbol.classList.contains("active")) {
-            duration = undefined;
-            symbol.classList.toggle("active");
-            // console.log("duration to toggle:", duration);
-            return;
-        }
+        // if (symbol.classList.contains("active")) {
+        //     duration = undefined;
+        //     symbol.classList.toggle("active");
+        //     console.log("duration to toggle:", duration);
+        //     return;
+        // }
         duration = symbol.dataset.duration;
         document.querySelectorAll(".symbol").forEach((el) => {
             el.classList.remove("active");
         });
         symbol.classList.add("active");
-        // console.log("note duration:", duration);
+        console.log("note duration:", duration);
+    }
+
+    function addNoteToBar(key) {
+        const finishedBar = {
+            w: 4,
+            h: 2,
+            q: 1,
+            8: 0.5,
+            16: 0.25,
+        };
+        const noteName = {
+            c3: "c/3",
+        };
+        // get noteName from key;
+        // add new note to temporary bar
+        // check temporary Bar to see if it is already full;
+        //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
+
+        // finishedBar[duration];
+        // console.log("finished bar:", finishedBar[duration]);
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -58,7 +83,6 @@
     // 5 staves with 2 bars each
     const bar1 = new VF.Stave(30, 0, 460);
     bar1.addClef("treble").addTimeSignature("4/4");
-    bar1.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
     bar1.setContext(context).draw();
     const bar2 = new VF.Stave(490, 0, 460);
     bar2.setContext(context).draw();
@@ -66,14 +90,11 @@
     bar3.addClef("treble");
     bar3.setContext(context).draw();
     const bar4 = new VF.Stave(490, 100, 460);
-    bar4.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
     bar4.setContext(context).draw();
     const bar5 = new VF.Stave(30, 200, 460);
-    bar5.setBegBarType(Vex.Flow.Barline.type.REPEAT_BEGIN);
     bar5.addClef("treble");
     bar5.setContext(context).draw();
     const bar6 = new VF.Stave(490, 200, 460);
-    bar6.setEndBarType(Vex.Flow.Barline.type.REPEAT_END);
     bar6.setContext(context).draw();
     const bar7 = new VF.Stave(30, 300, 460);
     bar7.addClef("treble");
@@ -84,8 +105,9 @@
     bar9.addClef("treble");
     bar9.setContext(context).draw();
     const bar10 = new VF.Stave(490, 400, 460);
-    bar10.setEndBarType(Vex.Flow.Barline.type.END);
     bar10.setContext(context).draw();
+
+    const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
 
     ///////////////////////////  bar 1 /////////////////////////////////////////
     // const notes1 = [
@@ -123,135 +145,154 @@
         { keys: "g/4", duration: "q" }
     );
 
-    // Create a voice in 4/4 and add above notes
-    const voice1 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice1.addTickables(notes1);
+    function drawNotesInTheBar(arg, barPos) {
+        let voice = [];
+        let formatter = [];
+        // let bar = [];
+        for (let i = 0; i <= 10; i++) {
+            voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
+            voice[i].addTickables(arg);
+            formatter[i] = new VF.Formatter()
+                .joinVoices([voice[i]])
+                .format([voice[i]], 400);
+            voice[i].draw(context, bars[barPos - 1]);
+        }
+    }
 
-    // Format and justify the notes to 400 pixels.
-    const formatter1 = new VF.Formatter()
-        .joinVoices([voice1])
-        .format([voice1], 400);
+    // drawNotesInTheBar(addNoteToBar, currentBar += 1)
+    drawNotesInTheBar(notes1, 1);
 
-    // Render voice1
-    voice1.draw(context, bar1);
+    // // Create a voice in 4/4 and add above notes
+    // const voice1 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice1.addTickables(notes1);
+
+    // // Format and justify the notes to 400 pixels.
+    // const formatter1 = new VF.Formatter()
+    //     .joinVoices([voice1])
+    //     .format([voice1], 400);
+
+    // // Render voice1
+    // voice1.draw(context, bar1);
 
     //////////////////////////// bar 2 /////////////////////////////////////
-    const notes2 = [
-        new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
+    // const notes2 = [
+    //     new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
+    //     new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["g/4"], duration: "h" }),
-    ];
+    //     new VF.StaveNote({ keys: ["g/4"], duration: "h" }),
+    // ];
 
-    const voice2 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice2.addTickables(notes2);
+    // drawNotesInTheBar(notes2, 2);
 
-    const formatter2 = new VF.Formatter()
-        .joinVoices([voice2])
-        .format([voice2], 400);
+    // const voice2 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice2.addTickables(notes2);
 
-    voice2.draw(context, bar2);
+    // const formatter2 = new VF.Formatter()
+    //     .joinVoices([voice2])
+    //     .format([voice2], 400);
 
-    //////////////////////////// bar 3 ////////////////////////////////////
-    const notes3 = [
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
+    // voice2.draw(context, bar2);
 
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
+    // //////////////////////////// bar 3 ////////////////////////////////////
+    // const notes3 = [
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-    ];
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
 
-    const voice3 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice3.addTickables(notes3);
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    // ];
 
-    const formatter3 = new VF.Formatter()
-        .joinVoices([voice3])
-        .format([voice3], 400);
+    // const voice3 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice3.addTickables(notes3);
 
-    voice3.draw(context, bar3);
+    // const formatter3 = new VF.Formatter()
+    //     .joinVoices([voice3])
+    //     .format([voice3], 400);
 
-    //////////////////////////// bar 4 /////////////////////////////////////
-    const notes4 = [
-        new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
+    // voice3.draw(context, bar3);
 
-        new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
+    // //////////////////////////// bar 4 /////////////////////////////////////
+    // const notes4 = [
+    //     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
-    ];
+    //     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
 
-    const voice4 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice4.addTickables(notes4);
+    //     new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
+    // ];
 
-    const formatter4 = new VF.Formatter()
-        .joinVoices([voice4])
-        .format([voice4], 400);
+    // const voice4 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice4.addTickables(notes4);
 
-    voice4.draw(context, bar4);
+    // const formatter4 = new VF.Formatter()
+    //     .joinVoices([voice4])
+    //     .format([voice4], 400);
 
-    //////////////////////////// bar 5 ////////////////////////////////////
-    const notes5 = [
-        new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
+    // voice4.draw(context, bar4);
 
-        new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
+    // //////////////////////////// bar 5 ////////////////////////////////////
+    // const notes5 = [
+    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
+    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
-    ];
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
 
-    const voice5 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice5.addTickables(notes5);
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
+    // ];
 
-    const formatter5 = new VF.Formatter()
-        .joinVoices([voice5])
-        .format([voice5], 400);
+    // const voice5 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice5.addTickables(notes5);
 
-    voice5.draw(context, bar5);
+    // const formatter5 = new VF.Formatter()
+    //     .joinVoices([voice5])
+    //     .format([voice5], 400);
 
-    //////////////////////////// bar 6 /////////////////////////////////////
-    const notes6 = [
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    // voice5.draw(context, bar5);
 
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    // //////////////////////////// bar 6 /////////////////////////////////////
+    // const notes6 = [
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["d/4"], duration: "h" }),
-    ];
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
 
-    const voice6 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice6.addTickables(notes6);
+    //     new VF.StaveNote({ keys: ["d/4"], duration: "h" }),
+    // ];
 
-    const formatter6 = new VF.Formatter()
-        .joinVoices([voice6])
-        .format([voice6], 400);
+    // const voice6 = new VF.Voice({ num_beats: 4, beat_value: 4 });
+    // voice6.addTickables(notes6);
 
-    voice6.draw(context, bar6);
+    // const formatter6 = new VF.Formatter()
+    //     .joinVoices([voice6])
+    //     .format([voice6], 400);
 
-    ////////////////////////////////bar 7 /////////////////////////////////////
-    notes1;
-    voice1;
-    formatter1;
-    voice1.draw(context, bar7);
+    // voice6.draw(context, bar6);
 
-    //////////////////////////////// bar 8 ////////////////////////////////////
-    notes2;
-    voice2;
-    formatter2;
-    voice2.draw(context, bar8);
+    // ////////////////////////////////bar 7 /////////////////////////////////////
+    // notes1;
+    // voice1;
+    // formatter1;
+    // voice1.draw(context, bar7);
 
-    ////////////////////////////////bar 9 /////////////////////////////////////
-    notes3;
-    voice3;
-    formatter3;
-    voice3.draw(context, bar9);
+    // //////////////////////////////// bar 8 ////////////////////////////////////
+    // notes2;
+    // voice2;
+    // formatter2;
+    // voice2.draw(context, bar8);
 
-    ////////////////////////////////bar 10 /////////////////////////////////////
-    notes4;
-    voice4;
-    formatter4;
-    voice4.draw(context, bar10);
+    // ////////////////////////////////bar 9 /////////////////////////////////////
+    // notes3;
+    // voice3;
+    // formatter3;
+    // voice3.draw(context, bar9);
+
+    // ////////////////////////////////bar 10 /////////////////////////////////////
+    // notes4;
+    // voice4;
+    // formatter4;
+    // voice4.draw(context, bar10);
 })();
 
 // const map = new Map([
@@ -316,13 +357,13 @@
 
 ////////////////////////////////////////////////////////////////
 
-// function drawNotesInTheBar() {
+// function drawNotesInTheBar(arg) {
 //     let voice = [];
 //     let formatter = [];
 //  let bar = [];
 //     for (let i = 0; i <= 10; i++) {
 //         voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
-//         voice[i].addTickables(notes1);
+//         voice[i].addTickables(arg);
 //         formatter[i] = new VF.Formatter()
 //             .joinVoices([voice[i]])
 //             .format([voice[i]], 400);
