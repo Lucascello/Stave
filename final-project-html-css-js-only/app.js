@@ -13,9 +13,15 @@
         noteAudio.currentTime = 0;
         if (currentAudio) {
             currentAudio.pause();
+            let siblings = key.parentElement.children;
+            for (let sib of siblings) {
+                sib.classList.remove("active");
+            }
+            // console.log("last note played before current one: ", currentAudio);
         }
         noteAudio.play();
         currentAudio = noteAudio;
+        console.log("note I'm Playing: ", currentAudio);
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
@@ -30,7 +36,7 @@
         if (note.classList.contains("active")) {
             duration = undefined;
             note.classList.toggle("active");
-            console.log("duration to toggle:", duration);
+            // console.log("duration to toggle:", duration);
             return;
         }
         duration = note.dataset.duration;
@@ -38,7 +44,7 @@
             el.classList.remove("active");
         });
         note.classList.add("active");
-        console.log("note duration:", duration);
+        // console.log("note duration:", duration);
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -311,8 +317,9 @@
 ////////////////////////////////////////////////////////////////
 
 // function drawNotesInTheBar() {
-//     const voice = 0;
-//     const formatter = 0;
+//     let voice = [];
+//     let formatter = [];
+//      let bar = [];
 
 //     for (let i = 0; i <= 10; i++) {
 //         voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
@@ -320,7 +327,7 @@
 //         formatter[i] = new VF.Formatter()
 //             .joinVoices([voice[i]])
 //             .format([voice[i]], 400);
-//         voice[i].draw(context, bar1);
+//         voice[i].draw(context, bar[i]);
 //     }
 // }
 

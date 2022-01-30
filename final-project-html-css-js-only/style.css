@@ -88,3 +88,14 @@
 .sixteenth {
     height: 80px;
 }
+
+h2 {
+    margin: 0;
+    border: 1px solid black;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+h3 {
+    margin: 0;
+}
