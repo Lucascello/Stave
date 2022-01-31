@@ -99,3 +99,20 @@ h2 {
 h3 {
     margin: 0;
 }
+
+.light {
+    width: 14.2vw;
+    height: 100vh;
+    background-color: white;
+    border: 1px solid #333;
+}
+
+.dark {
+    width: 10vw;
+    height: 60vh;
+    background-color: black;
+    margin-left: -5vw;
+    margin-right: -5vw;
+    align-self: flex-start;
+    z-index: 1;
+}

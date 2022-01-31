@@ -182,21 +182,7 @@
 
     const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
 
-    ///////////////////////////  bar 1 /////////////////////////////////////////
-    // const notes1 = [
-    //     // A quarter-note C.
-    //     new VF.StaveNote({ keys: ["c/4"], duration: "q" }),
-
-    //     // A quarter-note D.
-    //     new VF.StaveNote({ keys: ["c/4"], duration: "q" }),
-
-    //     // A quarter-note rest. Note that the key (b/4) specifies the vertical
-    //     // position of the rest.
-    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
-
-    //     // A C-Major chord.
-    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
-    // ];
+    ///////////////////////////  bars /////////////////////////////////////////
 
     function createNotesToInsertInTheBar() {
         const notes = [];
@@ -233,13 +219,6 @@
         return notes;
     }
 
-    // const notes1 = createNotesToInsertInTheBar(
-    //     { keys: "c/4", duration: "q" },
-    //     { keys: "c/4", duration: "q" },
-    //     { keys: "g/4", duration: "q" },
-    //     { keys: "g/4", duration: "q" }
-    // );
-
     function drawNotesInTheBar(arg, barPos) {
         let voice = [];
         let formatter = [];
@@ -254,64 +233,7 @@
         }
     }
 
-    // drawNotesInTheBar(addNoteToBar, currentBar += 1)
-    // drawNotesInTheBar();
-
-    //////////////////////////// bar 2 /////////////////////////////////////
-    // const notes2 = [
-    //     new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["g/4"], duration: "h" }),
-    // ];
-
-    // drawNotesInTheBar(notes2, 2);
-
-    // //////////////////////////// bar 3 ////////////////////////////////////
-    // const notes3 = [
-    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }).addAccidental(
-    //         0,
-    //         new VF.Accidental("#")
-    //     ),
-
-    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-    // ];
-
-    // drawNotesInTheBar(notes3, 3);
-
-    // //////////////////////////// bar 4 /////////////////////////////////////
-    // const notes4 = [
-    //     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["d/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
-    // ];
-
-    // //////////////////////////// bar 5 ////////////////////////////////////
-    // const notes5 = [
-    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["g/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
-    // ];
-
-    // //////////////////////////// bar 6 /////////////////////////////////////
-    // const notes6 = [
-    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-
-    //     new VF.StaveNote({ keys: ["d/4"], duration: "h" }),
-    // ];
+    
 })();
 
 // const map = new Map([
@@ -373,24 +295,6 @@
 // function createKeyNotes(note, range) {
 //     //return octaveKeys
 // }
-
-////////////////////////////////////////////////////////////////
-
-// function drawNotesInTheBar(arg) {
-//     let voice = [];
-//     let formatter = [];
-//  let bar = [];
-//     for (let i = 0; i <= 10; i++) {
-//         voice[i] = new VF.Voice({ num_beats: 4, beat_value: 4 });
-//         voice[i].addTickables(arg);
-//         formatter[i] = new VF.Formatter()
-//             .joinVoices([voice[i]])
-//             .format([voice[i]], 400);
-//         voice[i].draw(context, bar[i]);
-//     }
-// }
-
-// drawNotesInTheBar();
 
 //////////////////// creating the piano keyboard dinamicaly ////////////////////////////
 
