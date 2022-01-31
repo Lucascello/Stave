@@ -3,9 +3,10 @@
     const symbols = document.querySelectorAll(".symbol");
     let currentAudio;
     let duration = "q";
-    let temporary = [];
+    let score = [];
     let currentBar = 1;
     let tempBar = [];
+    let sumTempBarDuration = 0;
 
     keyss.forEach((key) => {
         key.addEventListener("click", () => {
@@ -102,21 +103,46 @@
         };
 
         // get noteName and from key;
-        console.log("current note Im playing: ", noteName[currentAudio.id]);
+        console.log(
+            "name of the note I'm playing: ",
+            noteName[currentAudio.id]
+        );
         console.log("finished bar:", finishedBar[duration]);
 
         // add new note to temporary bar
 
         let currentNote = {
             keys: noteName[currentAudio.id],
-            duration: finishedBar[duration],
+            duration: duration,
         };
-        tempBar.push(currentNote);
-        console.log("my tempbar: ", tempBar);
-        for (let i = 0; i < currentNote.length; i++) {
-            // check temporary Bar to see if it is already full;
-            //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
+
+        console.log("currentNote: ", currentNote);
+
+        if (sumTempBarDuration + finishedBar[duration] <= 4) {
+            sumTempBarDuration += finishedBar[duration];
+            console.log("##############", sumTempBarDuration);
+            tempBar.push(currentNote);
+            console.log("my tempbar: ", tempBar);
+            if (sumTempBarDuration === 4) {
+                console.log("currentBar*********:", currentBar);
+                drawNotesInTheBar(
+                    createNotesToInsertInTheBar(...tempBar),
+                    currentBar
+                );
+                currentBar++;
+                score.push([tempBar]);
+                console.log("my new score: ", score);
+                sumTempBarDuration = 0;
+                tempBar = [];
+            }
+        } else {
+            tempBar = [currentNote];
         }
+
+        // check temporary Bar to see if it is already full;
+        //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
+
+        // console.log("my tempbar: ", tempBar);
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -174,12 +200,16 @@
 
     function createNotesToInsertInTheBar() {
         const notes = [];
-        console.log("My notes to add to the bar", ...arguments);
+        // console.log("My notes to add to the bar", ...arguments);
         for (index in arguments) {
+            console.log("index:", index);
             const arg = arguments[index];
+            console.log("arg: ", arg);
+            //checar todos os elementos (args)
+            //arg é um [{}, {}, {}]
             if (
-                arguments[index].keys.substring(1, 2) === "#" ||
-                arguments[index].keys.substring(1, 2) === "b"
+                arg.keys.substring(1, 2) === "#" ||
+                arg.keys.substring(1, 2) === "b"
             ) {
                 notes.push(
                     new VF.StaveNote({
@@ -187,7 +217,7 @@
                         duration: arg.duration,
                     }).addAccidental(
                         0,
-                        new VF.Accidental(arguments[index].keys.substring(1, 2))
+                        new VF.Accidental(arg.keys.substring(1, 2))
                     )
                 );
             } else {
@@ -203,12 +233,12 @@
         return notes;
     }
 
-    const notes1 = createNotesToInsertInTheBar(
-        { keys: "c/4", duration: "q" },
-        { keys: "c/4", duration: "q" },
-        { keys: "g/4", duration: "q" },
-        { keys: "g/4", duration: "q" }
-    );
+    // const notes1 = createNotesToInsertInTheBar(
+    //     { keys: "c/4", duration: "q" },
+    //     { keys: "c/4", duration: "q" },
+    //     { keys: "g/4", duration: "q" },
+    //     { keys: "g/4", duration: "q" }
+    // );
 
     function drawNotesInTheBar(arg, barPos) {
         let voice = [];
@@ -225,7 +255,7 @@
     }
 
     // drawNotesInTheBar(addNoteToBar, currentBar += 1)
-    drawNotesInTheBar(notes1, 1);
+    // drawNotesInTheBar();
 
     //////////////////////////// bar 2 /////////////////////////////////////
     // const notes2 = [
