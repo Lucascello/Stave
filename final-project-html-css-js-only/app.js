@@ -5,11 +5,13 @@
     let duration = "q";
     let temporary = [];
     let currentBar = 1;
+    let tempBar = [];
 
     keyss.forEach((key) => {
         key.addEventListener("click", () => {
             playNote(key);
             addNoteToBar(key);
+            // console.log("This is my global currentAudio: ", currentAudio);
         });
     });
 
@@ -26,7 +28,7 @@
         }
         noteAudio.play();
         currentAudio = noteAudio;
-        console.log("note I'm Playing: ", currentAudio);
+        // console.log("note I'm Playing: ", currentAudio);
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
             key.classList.remove("active");
@@ -62,14 +64,59 @@
         };
         const noteName = {
             c3: "c/3",
+            db3: "c#/3",
+            d3: "d/3",
+            eb3: "d#/3",
+            e3: "e/3",
+            f3: "f/3",
+            gb3: "f#/3",
+            g3: "g/3",
+            ab3: "g#/3",
+            a3: "a/3",
+            bb3: "a#/3",
+            b3: "b/3",
+            c4: "c/4",
+            db4: "c#/4",
+            d4: "d/4",
+            eb4: "d#/4",
+            e4: "e/4",
+            f4: "f/4",
+            gb4: "f#/4",
+            g4: "g/4",
+            ab4: "g#/4",
+            a4: "a/4",
+            bb4: "a#/4",
+            b4: "b/4",
+            c5: "c/5",
+            db5: "c#/5",
+            d5: "d/5",
+            eb5: "d#/5",
+            e5: "e/5",
+            f5: "f/5",
+            gb5: "f#/5",
+            g5: "g/5",
+            ab5: "g#/5",
+            a5: "a/5",
+            bb5: "a#/5",
+            b5: "b/5",
         };
-        // get noteName from key;
-        // add new note to temporary bar
-        // check temporary Bar to see if it is already full;
-        //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
 
-        // finishedBar[duration];
-        // console.log("finished bar:", finishedBar[duration]);
+        // get noteName and from key;
+        console.log("current note Im playing: ", noteName[currentAudio.id]);
+        console.log("finished bar:", finishedBar[duration]);
+
+        // add new note to temporary bar
+
+        let currentNote = {
+            keys: noteName[currentAudio.id],
+            duration: finishedBar[duration],
+        };
+        tempBar.push(currentNote);
+        console.log("my tempbar: ", tempBar);
+        for (let i = 0; i < currentNote.length; i++) {
+            // check temporary Bar to see if it is already full;
+            //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
+        }
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -180,18 +227,6 @@
     // drawNotesInTheBar(addNoteToBar, currentBar += 1)
     drawNotesInTheBar(notes1, 1);
 
-    // // Create a voice in 4/4 and add above notes
-    // const voice1 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    // voice1.addTickables(notes1);
-
-    // // Format and justify the notes to 400 pixels.
-    // const formatter1 = new VF.Formatter()
-    //     .joinVoices([voice1])
-    //     .format([voice1], 400);
-
-    // // Render voice1
-    // voice1.draw(context, bar1);
-
     //////////////////////////// bar 2 /////////////////////////////////////
     // const notes2 = [
     //     new VF.StaveNote({ keys: ["a/4"], duration: "q" }),
@@ -203,37 +238,21 @@
 
     // drawNotesInTheBar(notes2, 2);
 
-    // const voice2 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    // voice2.addTickables(notes2);
-
-    // const formatter2 = new VF.Formatter()
-    //     .joinVoices([voice2])
-    //     .format([voice2], 400);
-
-    // voice2.draw(context, bar2);
-
     // //////////////////////////// bar 3 ////////////////////////////////////
-    const notes3 = [
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }).addAccidental(
-            0,
-            new VF.Accidental("")
-        ),
+    // const notes3 = [
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }).addAccidental(
+    //         0,
+    //         new VF.Accidental("#")
+    //     ),
 
-        new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
+    //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
 
-        new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
-    ];
+    //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
+    // ];
 
-    const voice3 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    voice3.addTickables(notes3);
-
-    const formatter3 = new VF.Formatter()
-        .joinVoices([voice3])
-        .format([voice3], 400);
-
-    voice3.draw(context, bar3);
+    // drawNotesInTheBar(notes3, 3);
 
     // //////////////////////////// bar 4 /////////////////////////////////////
     // const notes4 = [
@@ -243,15 +262,6 @@
 
     //     new VF.StaveNote({ keys: ["c/4"], duration: "h" }),
     // ];
-
-    // const voice4 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    // voice4.addTickables(notes4);
-
-    // const formatter4 = new VF.Formatter()
-    //     .joinVoices([voice4])
-    //     .format([voice4], 400);
-
-    // voice4.draw(context, bar4);
 
     // //////////////////////////// bar 5 ////////////////////////////////////
     // const notes5 = [
@@ -264,15 +274,6 @@
     //     new VF.StaveNote({ keys: ["f/4"], duration: "q" }),
     // ];
 
-    // const voice5 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    // voice5.addTickables(notes5);
-
-    // const formatter5 = new VF.Formatter()
-    //     .joinVoices([voice5])
-    //     .format([voice5], 400);
-
-    // voice5.draw(context, bar5);
-
     // //////////////////////////// bar 6 /////////////////////////////////////
     // const notes6 = [
     //     new VF.StaveNote({ keys: ["e/4"], duration: "q" }),
@@ -281,39 +282,6 @@
 
     //     new VF.StaveNote({ keys: ["d/4"], duration: "h" }),
     // ];
-
-    // const voice6 = new VF.Voice({ num_beats: 4, beat_value: 4 });
-    // voice6.addTickables(notes6);
-
-    // const formatter6 = new VF.Formatter()
-    //     .joinVoices([voice6])
-    //     .format([voice6], 400);
-
-    // voice6.draw(context, bar6);
-
-    // ////////////////////////////////bar 7 /////////////////////////////////////
-    // notes1;
-    // voice1;
-    // formatter1;
-    // voice1.draw(context, bar7);
-
-    // //////////////////////////////// bar 8 ////////////////////////////////////
-    // notes2;
-    // voice2;
-    // formatter2;
-    // voice2.draw(context, bar8);
-
-    // ////////////////////////////////bar 9 /////////////////////////////////////
-    // notes3;
-    // voice3;
-    // formatter3;
-    // voice3.draw(context, bar9);
-
-    // ////////////////////////////////bar 10 /////////////////////////////////////
-    // notes4;
-    // voice4;
-    // formatter4;
-    // voice4.draw(context, bar10);
 })();
 
 // const map = new Map([
