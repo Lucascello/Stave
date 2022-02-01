@@ -54,12 +54,34 @@ if (process.env.NODE_ENV == "production") {
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-    console.log("do I have a userId on / :", req.session.userId);
+    console.log("I have an userId for scores :", req.session.userId);
     if (req.session.userId) {
         return res.render("home", { layout: "main" });
     } else {
         return res.redirect("/register");
     }
+});
+
+app.get("/score", (req, res) => {
+    console.log("do I have an userId on / :", req.session.userId);
+    if (req.session.userId) {
+        return res.render("score", { layout: "main" });
+    } else {
+        return res.redirect("/register");
+    }
+});
+
+app.post("/home", (req, res) => {
+    // console.log("post/petition");
+    const { user_id, name, score } = req.body;
+
+    db.addScore(user_id, name, score)
+        .then(({ rows }) => {
+            // res.redirect("/thanks");
+        })
+        .catch((err) => {
+            res.render("home", { saveScoreError: true });
+        });
 });
 
 app.get("/register", (req, res) => {
@@ -126,7 +148,7 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    // console.log(req.session);
+    console.log(req.session);
     req.session = null;
     res.redirect("/");
 });

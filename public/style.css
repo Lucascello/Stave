@@ -1,3 +1,12 @@
+body {
+    background: rgb(174, 215, 238);
+    background: radial-gradient(
+        circle,
+        rgba(174, 215, 238, 1) 0%,
+        rgba(81, 191, 163, 1) 100%
+    );
+}
+
 .music {
     margin: 0;
     width: 100vw;
@@ -10,9 +19,9 @@
 }
 
 #container svg {
-    background-color: #fff;
+    background-color: white;
     margin-top: 10px;
-    border: 1px solid #aaaaaa;
+    border: 1px solid black;
 }
 
 .keyboard {
@@ -62,7 +71,7 @@
 }
 
 .symbol.active {
-    background-color: rgb(105, 117, 49);
+    background-color: rgb(13, 165, 168);
 }
 
 .whole {
@@ -127,4 +136,131 @@ h5 {
     font-size: larger;
     color: red;
     margin: 0;
+}
+
+.logout {
+    width: 50px;
+    height: 120px;
+    background-color: white;
+    border: 1px solid #333;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: nowrap;
+    font-size: medium;
+}
+
+.navigation {
+    display: flex;
+}
+
+.top-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+.save {
+    width: 50px;
+    height: 120px;
+    background-color: white;
+    border: 1px solid #333;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.place-holder-key {
+    width: 30px;
+    height: 80px;
+    background-color: black;
+    margin-left: -15px;
+    margin-right: -15px;
+    z-index: 1;
+}
+
+.button {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: rgb(107, 0, 153);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: medium;
+    display: flex;
+    justify-content: center;
+}
+
+.light {
+    width: 14.2vw;
+    height: 100vh;
+    background-color: white;
+    border: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.register {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: center;
+    background: rgb(174, 215, 238);
+    background: radial-gradient(
+        circle,
+        rgba(174, 215, 238, 1) 0%,
+        rgba(81, 191, 163, 1) 100%
+    );
+}
+
+.dark {
+    width: 10vw;
+    height: 60vh;
+    background-color: black;
+    margin-left: -5vw;
+    margin-right: -5vw;
+    align-self: flex-start;
+    z-index: 1;
+}
+
+h6 {
+    font-size: 80px;
+    position: relative;
+    top: 100px;
+    left: 5px;
+}
+
+.letter {
+    position: relative;
+    top: -170px;
+    left: 5px;
+}
+
+.letterA {
+    position: relative;
+    top: -164px;
+    left: 5px;
+}
+
+.clef {
+    font-size: 100px;
+    position: relative;
+    top: 155px;
+    left: 5px;
+}
+
+.score {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

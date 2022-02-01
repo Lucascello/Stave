@@ -58,10 +58,15 @@
     function addNoteToBar(key) {
         const finishedBar = {
             w: 4,
+            wr: 4,
             h: 2,
+            hr: 2,
             q: 1,
+            qr: 1,
             8: 0.5,
+            "8r": 0.5,
             16: 0.25,
+            "16r": 0.25,
         };
         const noteName = {
             c3: "c/3",
@@ -88,6 +93,7 @@
             a4: "a/4",
             bb4: "a#/4",
             b4: "b/4",
+            cb5: "c/5",
             c5: "c/5",
             db5: "c#/5",
             d5: "d/5",
@@ -232,8 +238,6 @@
             voice[i].draw(context, bars[barPos - 1]);
         }
     }
-
-    
 })();
 
 // const map = new Map([

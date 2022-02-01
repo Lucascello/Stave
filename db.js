@@ -48,3 +48,11 @@ module.exports.updatePassword = (password, email) => {
     const params = [password, email];
     return db.query(q, params);
 };
+
+module.exports.addScore = (user_id, name, score) => {
+    const q = `INSERT INTO scores (user_id, name, score)
+                VALUES ($1, $2, $3)
+                RETURNING id`;
+    const params = [user_id, name, score];
+    return db.query(q, params);
+};

@@ -6,10 +6,10 @@
     <div class="dark"></div>
     <div class="light"><h6>T</h6></div>
     <div class="light register">
-    {{#if getPasswordsError}}<h3>Something
+    {{#if getPasswordsError}}<h5>Something
             <br />
             went wrong
-        </h3>{{/if}}
+        </h5>{{/if}}
     <form method="POST">
         <br /><br /> <br /><br />
         <h3> Please log in!
@@ -34,15 +34,18 @@
                     type="password"
                     id="sign"
                     name="password"
-                    minlength="8"
+                    minlength="6"
                     placeholder=""
                     value=""
                     autocomplete="off"
                     required
                 />
             <br /> <br /> <br />
-            <button class="log">Log In</button>
-            <br /> <br /> <br /> <br />
+            <div class="button">
+                <button class="log">Log In</button>
+            </div>
+            
+            <br /> <br /> <br />
         </form>
         <h6 class="letter">A</h6>
     </div>
@@ -52,3 +55,7 @@
     <div class="dark"></div>
     <div class="light"><h6>&#119074;</h6></div>
 </div>
+
+<footer>
+    <p> © Lucas Ebert - Jan. 2022</p>
+</footer>
