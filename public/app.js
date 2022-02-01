@@ -259,7 +259,7 @@
 
         // calculate the lenght of the first note in milliseconds
         updateCurrentNoteDuration(noteToBePlayed.duration);
-        console.log("play duration da musica:", playDuration);
+        console.log("play duration of the song:", playDuration);
 
         interval = setInterval(() => {
             //if (nota_atual_nao_eh_pausa) {
@@ -281,8 +281,8 @@
 
     // calculate the note duration based on the milliseconds
     function updateCurrentNoteDuration(noteDuration) {
-        // exemplo: 666 * 2 (no caso de uma mínima) = 1332 milissegundos
-        playDuration = bpmMilliseconds * finishedBar[noteDuration]; // currentBar é o mapa que vc fez no domingo de letras para números ('h' => 2, etc)
+        // example: 666 * 2 (in case it's a half note) = 1332 milissegundos
+        playDuration = bpmMilliseconds * finishedBar[noteDuration]; // currentBar my finishedBar object
     }
 
     let iteratorBar = 0;
