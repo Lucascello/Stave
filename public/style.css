@@ -62,7 +62,9 @@ body {
 }
 
 .symbols {
-    height: 75vh;
+    margin-right: 10px;
+    margin-left: 10px;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -75,23 +77,23 @@ body {
 }
 
 .whole {
-    width: 80px;
+    width: 40px;
 }
 
 .half {
-    height: 80px;
+    height: 40px;
 }
 
 .quarter {
-    height: 80px;
+    height: 40px;
 }
 
 .eight {
-    height: 80px;
+    height: 40px;
 }
 
 .sixteenth {
-    height: 80px;
+    height: 40px;
 }
 
 h2 {
@@ -181,6 +183,14 @@ h5 {
     z-index: 1;
 }
 
+button {
+    cursor: pointer;
+}
+
+.click {
+    cursor: grab;
+}
+
 .button {
     background: none !important;
     border: none;
@@ -190,10 +200,10 @@ h5 {
     /*input has OS specific font-family*/
     color: rgb(107, 0, 153);
     text-decoration: underline;
-    cursor: pointer;
     font-size: medium;
     display: flex;
     justify-content: center;
+    cursor: pointer;
 }
 
 .light {
@@ -263,4 +273,51 @@ h6 {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.tools {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.toolbox {
+    display: flex;
+    border: 1px solid black;
+}
+
+.play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.player {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.outterstop {
+    border: 1px solid black;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerstop {
+    width: 25px;
+    height: 25px;
+    background-color: black;
 }

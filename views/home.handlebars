@@ -2,7 +2,7 @@
 
 <div class="top-home">
     <div id="piano">
-        <div data-note="c3"     class="key white">
+        <div data-note="c3" class="key white">
             <audio id="c3" src="notes/C3.mp3"></audio>
         </div>
         <div data-note="db3" class="key black">
@@ -118,13 +118,14 @@
                 ></audio></button>
         </div></div>
     <div class="navigation">
-        <div class="save"> <button class="button">Save</button> </div>
+        <div class="save">
+            <button id="button" class="button">Save</button>
+        </div>
         <div class="place-holder-key"></div>
-        <div class="logout"><a
-                id="logout"
-                class="click"
-                href="/logout"
-            >Logout</a></div>
+        <form class="logout" action="">
+            <a class="click" href="/logout">Logout</a>
+        </form>
+
     </div>
 </div>
 
@@ -136,32 +137,65 @@
 <div class="music">
     <div id="container"></div>
     <div>
-        <div>
-            <h2>&#x029D0;</h2>
+        <div class="play">
+            <h2>&#9654;</h2>
             <h3>Play</h3>
         </div>
+        <br />
+        <div class="stop">
+            <div class="outterstop">
+                <div class="innerstop"></div>
+            </div>
+            <h3>Stop</h3>
+        </div>
     </div>
-    <div class="symbols">
-        <img data-duration="wr" class="whole symbol" src="whole-rest.png" />
-        <img data-duration="hr" class="whole symbol" src="half-rest.png" />
-        <img data-duration="qr" class="quarter symbol" src="quarter-rest.png" />
-        <img data-duration="8r" class="eight symbol" src="eight-rest.png" />
-        <img
-            data-duration="16r"
-            class="sixteenth symbol"
-            src="sixteenth-rest.png"
-        />
-    </div>
-    <div class="symbols">
-        <img data-duration="w" class="whole symbol" src="whole.png" />
-        <img data-duration="h" class="half symbol" src="half.png" />
-        <img
-            data-duration="q"
-            class="quarter symbol active"
-            src="quarter.png"
-        />
-        <img data-duration="8" class="eight symbol" src="eight.png" />
-        <img data-duration="16" class="sixteenth symbol" src="sixteenth.png" />
+    <div class="tools">
+        <h1>Tools</h1>
+        <div class="toolbox">
+            <div class="symbols">
+                <img data-duration="w" class="whole symbol" src="whole.png" />
+                <img data-duration="h" class="half symbol" src="half.png" />
+                <img
+                    data-duration="q"
+                    class="quarter symbol active"
+                    src="quarter.png"
+                />
+                <img data-duration="8" class="eight symbol" src="eight.png" />
+                <img
+                    data-duration="16"
+                    class="sixteenth symbol"
+                    src="sixteenth.png"
+                />
+            </div>
+            <div class="symbols">
+                <img
+                    data-duration="wr"
+                    class="whole symbol"
+                    src="whole-rest.png"
+                />
+                <img
+                    data-duration="hr"
+                    class="whole symbol"
+                    src="half-rest.png"
+                />
+                <img
+                    data-duration="qr"
+                    class="quarter symbol"
+                    src="quarter-rest.png"
+                />
+                <img
+                    data-duration="8r"
+                    class="eight symbol"
+                    src="eight-rest.png"
+                />
+                <img
+                    data-duration="16r"
+                    class="sixteenth symbol"
+                    src="sixteenth-rest.png"
+                />
+            </div>
+        </div>
+
     </div>
 </div>
 <footer>

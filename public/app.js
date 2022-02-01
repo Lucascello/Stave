@@ -1,12 +1,66 @@
 (function () {
     const keyss = document.querySelectorAll(".key");
     const symbols = document.querySelectorAll(".symbol");
+    const save = document.getElementById("button");
+    const playButton = document.querySelector(".play");
+    const stopButton = document.querySelector(".stop");
     let currentAudio;
     let duration = "q";
     let score = [];
     let currentBar = 1;
     let tempBar = [];
     let sumTempBarDuration = 0;
+    const finishedBar = {
+        w: 4,
+        wr: 4,
+        h: 2,
+        hr: 2,
+        q: 1,
+        qr: 1,
+        8: 0.5,
+        "8r": 0.5,
+        16: 0.25,
+        "16r": 0.25,
+    };
+    const noteName = {
+        c3: "c/3",
+        db3: "c#/3",
+        d3: "d/3",
+        eb3: "d#/3",
+        e3: "e/3",
+        f3: "f/3",
+        gb3: "f#/3",
+        g3: "g/3",
+        ab3: "g#/3",
+        a3: "a/3",
+        bb3: "a#/3",
+        b3: "b/3",
+        c4: "c/4",
+        db4: "c#/4",
+        d4: "d/4",
+        eb4: "d#/4",
+        e4: "e/4",
+        f4: "f/4",
+        gb4: "f#/4",
+        g4: "g/4",
+        ab4: "g#/4",
+        a4: "a/4",
+        bb4: "a#/4",
+        b4: "b/4",
+        cb5: "c/5",
+        c5: "c/5",
+        db5: "c#/5",
+        d5: "d/5",
+        eb5: "d#/5",
+        e5: "e/5",
+        f5: "f/5",
+        gb5: "f#/5",
+        g5: "g/5",
+        ab5: "g#/5",
+        a5: "a/5",
+        bb5: "a#/5",
+        b5: "b/5",
+    };
 
     keyss.forEach((key) => {
         key.addEventListener("click", () => {
@@ -55,67 +109,22 @@
         console.log("note duration:", duration);
     }
 
-    function addNoteToBar(key) {
-        const finishedBar = {
-            w: 4,
-            wr: 4,
-            h: 2,
-            hr: 2,
-            q: 1,
-            qr: 1,
-            8: 0.5,
-            "8r": 0.5,
-            16: 0.25,
-            "16r": 0.25,
-        };
-        const noteName = {
-            c3: "c/3",
-            db3: "c#/3",
-            d3: "d/3",
-            eb3: "d#/3",
-            e3: "e/3",
-            f3: "f/3",
-            gb3: "f#/3",
-            g3: "g/3",
-            ab3: "g#/3",
-            a3: "a/3",
-            bb3: "a#/3",
-            b3: "b/3",
-            c4: "c/4",
-            db4: "c#/4",
-            d4: "d/4",
-            eb4: "d#/4",
-            e4: "e/4",
-            f4: "f/4",
-            gb4: "f#/4",
-            g4: "g/4",
-            ab4: "g#/4",
-            a4: "a/4",
-            bb4: "a#/4",
-            b4: "b/4",
-            cb5: "c/5",
-            c5: "c/5",
-            db5: "c#/5",
-            d5: "d/5",
-            eb5: "d#/5",
-            e5: "e/5",
-            f5: "f/5",
-            gb5: "f#/5",
-            g5: "g/5",
-            ab5: "g#/5",
-            a5: "a/5",
-            bb5: "a#/5",
-            b5: "b/5",
-        };
+    if (save) {
+        save.addEventListener("click", saveMusicSheet);
+    }
 
-        // get noteName and from key;
+    function saveMusicSheet() {
+        let name = prompt("Name your composition");
+        console.log(name);
+        console.log("valor do score: ", score);
+    }
+
+    function addNoteToBar(key) {
         console.log(
             "name of the note I'm playing: ",
             noteName[currentAudio.id]
         );
         console.log("finished bar:", finishedBar[duration]);
-
-        // add new note to temporary bar
 
         let currentNote = {
             keys: noteName[currentAudio.id],
@@ -136,7 +145,7 @@
                     currentBar
                 );
                 currentBar++;
-                score.push([tempBar]);
+                score.push(tempBar);
                 console.log("my new score: ", score);
                 sumTempBarDuration = 0;
                 tempBar = [];
@@ -144,11 +153,6 @@
         } else {
             tempBar = [currentNote];
         }
-
-        // check temporary Bar to see if it is already full;
-        //   if it is full call function createNotesToInsertInTheBar and empty temporary, and currentBar++
-
-        // console.log("my tempbar: ", tempBar);
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -237,6 +241,78 @@
                 .format([voice[i]], 400);
             voice[i].draw(context, bars[barPos - 1]);
         }
+    }
+
+    ////////////////////// playing button/audio //////////////////////////
+
+    playButton.addEventListener("click", play);
+    stopButton.addEventListener("click", stopPlaying);
+
+    const BPM = 90;
+
+    const bpmMilliseconds = 1000 / (BPM / 60); // example: 90 BPM gives 666 milliseconds
+    let interval = null;
+    let playDuration = 0;
+
+    function play() {
+        let noteToBePlayed = getNextNote();
+
+        // calculate the lenght of the first note in milliseconds
+        updateCurrentNoteDuration(noteToBePlayed.duration);
+        console.log("play duration da musica:", playDuration);
+
+        interval = setInterval(() => {
+            //if (nota_atual_nao_eh_pausa) {
+            const noteAudio = document.getElementById(
+                getKeyByValue(noteName, noteToBePlayed.keys)
+            );
+            noteAudio.play();
+            //}
+
+            noteToBePlayed = getNextNote(); // pass the value of the next note
+            updateCurrentNoteDuration(noteToBePlayed.duration);
+        }, playDuration);
+    }
+
+    function stopPlaying() {
+        clearInterval(interval);
+        interval = null;
+    }
+
+    // calculate the note duration based on the milliseconds
+    function updateCurrentNoteDuration(noteDuration) {
+        // exemplo: 666 * 2 (no caso de uma mínima) = 1332 milissegundos
+        playDuration = bpmMilliseconds * finishedBar[noteDuration]; // currentBar é o mapa que vc fez no domingo de letras para números ('h' => 2, etc)
+    }
+
+    let iteratorBar = 0;
+    let iteratorNote = 0;
+
+    function getNextNote() {
+        if (!score.length) {
+            return false;
+        }
+        console.log("what's the lenght of my score:", score);
+        console.log(
+            "iteratorBar e ******** iteratorNote: ",
+            iteratorBar,
+            iteratorNote
+        );
+        const nextNote = score[iteratorBar][iteratorNote];
+        if (score)
+            if (score[iteratorBar].length === iteratorNote + 1) {
+                iteratorNote = 0;
+                if (score.length !== iteratorBar + 1) {
+                    iteratorBar++;
+                }
+            } else {
+                iteratorNote++;
+            }
+
+        return nextNote;
+    }
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find((key) => object[key] === value);
     }
 })();
 
