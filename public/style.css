@@ -1,7 +1,3 @@
-* {
-    background-color: rgb(151, 167, 73);
-}
-
 .music {
     margin: 0;
     width: 100vw;
@@ -117,4 +113,18 @@ h3 {
     z-index: 1;
 }
 
+.description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.click:hover {
+    cursor: pointer;
+}
+
+h5 {
+    font-size: larger;
+    color: red;
+    margin: 0;
+}

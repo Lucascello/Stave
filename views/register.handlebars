@@ -1,0 +1,84 @@
+<div class="keyboard">
+    <div class="light"><h6 class="clef">&#119070;</h6></div>
+    <div class="dark"></div>
+    <div class="light"><h6>S</h6></div>
+    <div class="dark"></div>
+    <div class="light"><h6>T</h6></div>
+    <div class="light register">
+        {{#if addUsersInfoError}}<h5>Something
+                <br />
+                went wrong.</h5>{{/if}}
+        <form method="POST">
+            <br />
+            <h3 class="form">
+                If you have
+                <br />
+                already registered,
+                <br />
+                please
+                <a class="click" href="/login"> login </a>
+            </h3>
+
+            <h4 class="form">First Name</h4>
+            <input
+                type="text"
+                id="first"
+                name="first"
+                placeholder=""
+                value=""
+                autocomplete="off"
+                required
+            />
+
+            <h4>Last Name</h4>
+            <input
+                type="text"
+                id="last"
+                name="last"
+                placeholder=""
+                value=""
+                autocomplete="off"
+                required
+            />
+
+            <h4>Email Address</h4>
+            <input
+                type="email"
+                id="email"
+                pattern="[^@\\\\\\\\\\\\\\\\\\\\\\\s]+@[^@\s]+\.[^@\s]+"
+                name="email"
+                placeholder=""
+                value=""
+                autocomplete="off"
+                required
+            />
+
+            <h4>Password</h4>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                minlength="6"
+                placeholder=""
+                value=""
+                autocomplete="off"
+                required
+            />
+
+            <br />
+            <br />
+
+            <button>Register</button>
+        </form>
+        <h6 class="letterA">A</h6>
+    </div>
+    <div class="light"><h6>V</h6></div>
+    <div class="dark"></div>
+    <div class="light"><h6>E</h6></div>
+    <div class="dark"></div>
+    <div class="light"><h6>&#119074;</h6></div>
+</div>
+
+<footer>
+    <p> © Lucas Ebert - Dec. 2021</p>
+</footer>
