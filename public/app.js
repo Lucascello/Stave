@@ -4,6 +4,7 @@
     const save = document.getElementById("button");
     const playButton = document.querySelector(".play");
     const stopButton = document.querySelector(".stop");
+    const clearButton = document.querySelector(".clear");
     let currentAudio;
     let duration = "q";
     let score = [];
@@ -62,6 +63,8 @@
         b5: "b/5",
     };
 
+    //////////////////////////////// sound on the piano ///////////////////////////////////
+
     keyss.forEach((key) => {
         key.addEventListener("click", () => {
             playNote(key);
@@ -109,51 +112,11 @@
         console.log("note duration:", duration);
     }
 
-    if (save) {
-        save.addEventListener("click", saveMusicSheet);
-    }
+    ////////////////////////////// clear the music sheet //////////////////////////////
 
-    function saveMusicSheet() {
-        let name = prompt("Name your composition");
-        console.log(name);
-        console.log("valor do score: ", score);
-    }
-
-    function addNoteToBar(key) {
-        console.log(
-            "name of the note I'm playing: ",
-            noteName[currentAudio.id]
-        );
-        console.log("finished bar:", finishedBar[duration]);
-
-        let currentNote = {
-            keys: noteName[currentAudio.id],
-            duration: duration,
-        };
-
-        console.log("currentNote: ", currentNote);
-
-        if (sumTempBarDuration + finishedBar[duration] <= 4) {
-            sumTempBarDuration += finishedBar[duration];
-            console.log("##############", sumTempBarDuration);
-            tempBar.push(currentNote);
-            console.log("my tempbar: ", tempBar);
-            if (sumTempBarDuration === 4) {
-                console.log("currentBar*********:", currentBar);
-                drawNotesInTheBar(
-                    createNotesToInsertInTheBar(...tempBar),
-                    currentBar
-                );
-                currentBar++;
-                score.push(tempBar);
-                console.log("my new score: ", score);
-                sumTempBarDuration = 0;
-                tempBar = [];
-            }
-        } else {
-            tempBar = [currentNote];
-        }
-    }
+    clearButton.addEventListener("click", function () {
+        location.reload();
+    });
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
     const VF = Vex.Flow;
@@ -188,11 +151,12 @@
     bar9.addClef("treble");
     bar9.setContext(context).draw();
     const bar10 = new VF.Stave(490, 400, 460);
+    bar10.setEndBarType(VF.Barline.type.END);
     bar10.setContext(context).draw();
 
     const bars = [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10];
 
-    ///////////////////////////  bars /////////////////////////////////////////
+    ///////////////////////////  write into the bars /////////////////////////////////////////
 
     function createNotesToInsertInTheBar() {
         const notes = [];
@@ -243,6 +207,42 @@
         }
     }
 
+    function addNoteToBar(key) {
+        console.log(
+            "name of the note I'm playing: ",
+            noteName[currentAudio.id]
+        );
+        console.log("finished bar:", finishedBar[duration]);
+
+        let currentNote = {
+            keys: noteName[currentAudio.id],
+            duration: duration,
+        };
+
+        console.log("currentNote: ", currentNote);
+
+        if (sumTempBarDuration + finishedBar[duration] <= 4) {
+            sumTempBarDuration += finishedBar[duration];
+            console.log("##############", sumTempBarDuration);
+            tempBar.push(currentNote);
+            console.log("my tempbar: ", tempBar);
+            if (sumTempBarDuration === 4) {
+                console.log("currentBar*********:", currentBar);
+                drawNotesInTheBar(
+                    createNotesToInsertInTheBar(...tempBar),
+                    currentBar
+                );
+                currentBar++;
+                score.push(tempBar);
+                console.log("my new score: ", score);
+                sumTempBarDuration = 0;
+                tempBar = [];
+            }
+        } else {
+            tempBar = [currentNote];
+        }
+    }
+
     ////////////////////// playing button/audio //////////////////////////
 
     const BPM = 90;
@@ -278,7 +278,7 @@
         }
         noteAudio.play();
         console.log("This is the note for the player to play: ", noteAudio);
-        console.log("tocando a nota", note, Date.now());
+        console.log("playing the note: ", note, Date.now());
         done();
     };
 
@@ -302,398 +302,16 @@
     function getKeyByValue(object, value) {
         return Object.keys(object).find((key) => object[key] === value);
     }
+
+    /////////////////////////////// saving music sheet /////////////////////////////
+
+    if (save) {
+        save.addEventListener("click", saveMusicSheet);
+    }
+
+    function saveMusicSheet() {
+        let name = prompt("Name your composition");
+        console.log(name);
+        console.log("valor do score: ", score);
+    }
 })();
-
-// const map = new Map([
-//     [[0, 10], "c/4"],
-//     [[10, 20], "d/4"],
-//     [[20, 30], "e/4"],
-// ]);
-
-// canvas.on("click", (event) => {
-//     const x = event.clientX;
-
-//     for (let [min, max] of map.keys()) {
-//         if (x > min && x < max) {
-//             // Match
-//             // VF.StaveNote()
-//         }
-//     }
-// });
-
-//////////////////////////////////////////////////////////////////////////
-
-// quarter.onmousedown = function (event) {
-//     let shiftX = event.clientX - quarter.getBoundingClientRect().left;
-//     let shiftY = event.clientY - quarter.getBoundingClientRect().top;
-
-//     quarter.style.position = "absolute";
-//     quarter.style.zIndex = 1000;
-//     document.body.append(quarter);
-
-//     moveAt(event.pageX, event.pageY);
-
-//     // moves the quarter at (pageX, pageY) coordinates
-//     // taking initial shifts into account
-//     function moveAt(pageX, pageY) {
-//         quarter.style.left = pageX - shiftX + "px";
-//         quarter.style.top = pageY - shiftY + "px";
-//     }
-
-//     function onMouseMove(event) {
-//         moveAt(event.pageX, event.pageY);
-//     }
-
-//     // move the quarter on mousemove
-//     document.addEventListener("mousemove", onMouseMove);
-
-//     // drop the quarter, remove unneeded handlers
-//     quarter.onmouseup = function () {
-//         document.removeEventListener("mousemove", onMouseMove);
-//         quarter.onmouseup = null;
-//     };
-// };
-
-// quarter.ondragstart = function () {
-//     return false;
-// };
-
-//////////////////////////////////////////////////////////////////
-
-// function createKeyNotes(note, range) {
-//     //return octaveKeys
-// }
-
-//////////////////// creating the piano keyboard dinamicaly ////////////////////////////
-
-// let numberOfOctaves = 3;
-// const octaveWidth = 560;
-// const pianoSVG = `<svg
-//         version="1.1"
-//         xmlns="http://www.w3.org/2000/svg"
-//         xmlns:xlink="http//www.w3.org/1999/xlink"
-//         viewbox="0 0 ${numberOfOctaves * octaveWidth} 150"
-//     >
-//     <g id="piano-keyboard"></g>
-//     </svg>`;
-
-// const whiteNotes = ["c", "d", "e", "f", "g", "a", "b"];
-// const range = ["c3", "b5"];
-
-// const piano = document.querySelector("#piano");
-
-// const keyboard = {
-//     keyboardSetup() {
-//         //Add SVG to piano div
-//         piano.innerHTML = pianoSVG;
-//         const pianoKeyboard = document.querySelector("#piano-keyboard");
-
-//         //Cretae Octaves
-//         for (let i = 0; i < numberOfOctaves; i++) {
-//             const octave = utilities.createSVGElement("g");
-//             octave.classList.add("octave");
-//             octave.setAttribute(
-//                 "transform",
-//                 `translate(${i * octaveWidth}, 0)`
-//             );
-
-//             let naturalKeyPositionX = 0;
-//             let sharpKeyPositionX = 60;
-
-//             // Add keys for white notes
-//             for (let j = 0; j < 7; j++) {
-//                 const naturalKey = utilities.createSVGElement("rect");
-//                 naturalKey.classList.add("white-key");
-//                 naturalKey.setAttribute("x", naturalKeyPositionX);
-//                 naturalKey.setAttribute("width", 80);
-//                 naturalKey.setAttribute("height", 151);
-//                 naturalKey.setAttribute("stroke", "#232323");
-//                 naturalKey.setAttribute("fill", "#FFFFF7");
-//                 naturalKeyPositionX += 80;
-//                 octave.appendChild(naturalKey);
-//             }
-//             //Add keys for black notes
-//             for (let k = 0; k < 5; k++) {
-//                 const sharpKey = utilities.createSVGElement("rect");
-//                 sharpKey.classList.add("white-key");
-//                 sharpKey.setAttribute("x", sharpKeyPositionX);
-//                 sharpKey.setAttribute("width", 40);
-//                 sharpKey.setAttribute("height", 100);
-//                 sharpKey.setAttribute("stroke", "#252424");
-//                 sharpKey.setAttribute("fill", "#101010");
-
-//                 if (k === 1) {
-//                     sharpKeyPositionX += 160;
-//                 } else {
-//                     sharpKeyPositionX += 80;
-//                 }
-
-//                 octave.appendChild(sharpKey);
-//             }
-//             pianoKeyboard.appendChild(octave);
-//         }
-//     },
-//     getAllWhiteNotes([firstNote, lastNote]) {
-//         //Which octave and note
-//         const firstNoteName = firstNote[0];
-//         const firstOctaveNumber = parseInt(firstNote[1]);
-//         // console.log("firstOctaveNumber", firstOctaveNumber);
-
-//         const lastNoteName = lastNote[0];
-//         const lastOctaveNumber = parseInt(lastNote[1]);
-//         console.log("lastOctaveNumber", lastOctaveNumber);
-
-//         const firstNotePosition = whiteNotes.indexOf(firstNoteName);
-//         const lastNotePosition = whiteNotes.indexOf(lastNoteName);
-//         console.log(
-//             " these are firstNotePosition, lastNotePosition",
-//             firstNotePosition,
-//             lastNotePosition
-//         );
-
-//         const allWhiteNotes = [];
-//         for (
-//             let octaveNumber = firstOctaveNumber;
-//             octaveNumber <= lastOctaveNumber;
-//             octaveNumber++
-//         ) {
-//             allWhiteNotes.push(
-//                 whiteNotes.map((notename) => {
-//                     return notename + "/" + octaveNumber;
-//                 })
-//             );
-//         }
-//         console.log("allWhiteNotes", allWhiteNotes);
-//     },
-// };
-
-// const utilities = {
-//     createSVGElement(e) {
-//         const element = document.createElementNS(
-//             "http://www.w3.org/2000/svg",
-//             e
-//         );
-//         return element;
-//     },
-// };
-
-// keyboard.keyboardSetup();
-// keyboard.getAllWhiteNotes(range);
-
-// function play() {
-//     let noteToBePlayed = getNextNote();
-
-//     // calculate the lenght of the first note in milliseconds
-//     updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
-//     console.log("play duration of the note:", playDuration);
-//     waitThenPlay(noteToBePlayed);
-
-// interval = setInterval(() => {
-//if (actual note is not a rest) {
-// const noteAudio = document.getElementById(
-//     getKeyByValue(noteName, noteToBePlayed.keys)
-// );
-// console.log("This is the note for the player to play: ", noteAudio);
-
-// noteAudio.play();
-// //}
-
-// noteToBePlayed = getNextNote(); // pass the value of the next note
-// updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
-// console.log("CHECKING THE PLAYDURATION:", playDuration);
-// console.log(
-//     "CHECKING THE DURATION OF MY NEXT NOTE:",
-//     finishedBar[noteToBePlayed.duration]
-// );
-// }, playDuration);
-// }
-
-// function waitThenPlay(noteToBePlayed) {
-//     timeOut = setTimeout(function () {
-//         noteAudio = document.getElementById(
-//             getKeyByValue(noteName, noteToBePlayed.keys)
-//         );
-//         console.log("This is the note for the player to play: ", noteAudio);
-
-//         noteAudio.play();
-//         //}
-
-//         noteToBePlayed = getNextNote(); // pass the value of the next note
-//         console.log("noteToBePlayed:", noteToBePlayed);
-//         updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
-//         console.log("CHECKING THE PLAYDURATION:", playDuration);
-//         console.log(
-//             "CHECKING THE DURATION OF MY NEXT NOTE:",
-//             finishedBar[noteToBePlayed.duration]
-//         );
-//         waitThenPlay(noteToBePlayed);
-//     }, playDuration);
-// }
-
-// function stopPlaying() {
-//     clearTimeout(timeOut);
-// }
-
-// let noteLength = finishedBar[duration];
-// // calculate the note duration based on the milliseconds
-// function updateCurrentNoteDuration(noteDuration) {
-//     // example: 666 * 2 (in case it's a half note) = 1332 milissegundos
-//     playDuration = bpmMilliseconds * noteDuration; // currentBar my finishedBar object
-//     console.log("noteDuration", noteDuration);
-// }
-
-// let iteratorBar = 0;
-// let iteratorNote = 0;
-
-// function getNextNote() {
-//     if (!score.length) {
-//         return false;
-//     }
-//     console.log("what's the lenght of my score:", score);
-//     console.log(
-//         "My iteratorBar and ******** iteratorNote: ",
-//         iteratorBar,
-//         iteratorNote
-//     );
-//     const nextNote = score[iteratorBar][iteratorNote];
-//     // if (
-//     //     iteratorBar >= score.length //&&
-//     //     // score[iteratorBar].length === iteratorNote + 1
-//     // ) {
-//     //     console.log("stop playing: ");
-//     //     stopPlaying();
-//     //     return false;
-//     // } else
-//     if (score[iteratorBar].length === iteratorNote + 1) {
-//         iteratorNote = 0;
-//         if (score.length !== iteratorBar + 1) {
-//             iteratorBar++;
-//         } else {
-//             setTimeout(stopPlaying, 3000);
-//             return nextNote;
-//         }
-//     } else {
-//         iteratorNote++;
-//     }
-
-//     return nextNote;
-// }
-// function getKeyByValue(object, value) {
-//     return Object.keys(object).find((key) => object[key] === value);
-// }
-//////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////
-
-// const playAll = async () => {
-//     const flatScore = [];
-
-//     for (const notes of score) {
-//         flatScore.push(...notes);
-//     }
-
-//     for (const note of flatScore) {
-//         //Passar a duracao correta ao inves de 1Sec
-//         await new Promise((resolve) =>
-//             setTimeout(() => playSingleNote(note, resolve), 1000)
-//         );
-//     }
-// };
-
-// const playSingleNote = (note, done) => {
-//     console.log("tocando a nota", note, Date.now());
-//     done();
-// };
-
-// playAll();
-
-////////////////////////////////////////////////////////////
-// function play() {
-//     if (
-//         score.length === iteratorBar + 1 &&
-//         score[iteratorBar].length === iteratorNote + 1
-//     ) {
-//         return;
-//     }
-//     let noteToBePlayed = getNextNote();
-
-//     // calculate the lenght of the first note in milliseconds
-//     updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
-//     console.log("play duration of the note:", playDuration);
-
-//     interval = setInterval(() => {
-//         //if (actual note is not a rest) {
-//         const noteAudio = document.getElementById(
-//             getKeyByValue(noteName, noteToBePlayed.keys)
-//         );
-//         console.log("This is the note for the player to play: ", noteAudio);
-
-//         noteAudio.currentTime = 0;
-//         if (currentAudio) {
-//             currentAudio.pause();
-//             console.log("last note played before current one: ", currentAudio);
-//         }
-//         noteAudio.play();
-
-//         noteToBePlayed = getNextNote(); // pass the value of the next note
-//         console.log("NOTE TO BE PLAYED:", noteToBePlayed);
-//         updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
-//         console.log("CHECKING THE PLAYDURATION:", playDuration);
-//         console.log(
-//             "CHECKING THE DURATION OF MY NEXT NOTE:",
-//             finishedBar[noteToBePlayed.duration]
-//         );
-//     }, playDuration);
-// }
-
-// function stopPlaying() {
-//     clearInterval(interval);
-//     interval = null;
-// }
-
-// let noteLength = finishedBar[duration];
-// // calculate the note duration based on the milliseconds
-// function updateCurrentNoteDuration(noteDuration) {
-//     // example: 666 * 2 (in case it's a half note) = 1332 milissegundos
-//     playDuration = bpmMilliseconds * noteDuration; // currentBar my finishedBar object
-//     console.log("noteDuration", noteDuration);
-// }
-
-// let iteratorBar = 0;
-// let iteratorNote = 0;
-
-// function getNextNote() {
-//     if (!score.length) {
-//         return false;
-//     }
-//     console.log("what's the lenght of my score:", score);
-//     console.log(
-//         "My iteratorBar and ******** iteratorNote: ",
-//         iteratorBar,
-//         iteratorNote
-//     );
-//     let nextNote = score[iteratorBar][iteratorNote];
-//     // if (
-//     //     score.length === iteratorBar + 1 &&
-//     //     score[iteratorBar].length === iteratorNote + 1
-//     // ) {
-//     //     console.log("stop playing: ");
-//     //     stopPlaying();
-//     //     return false;
-//     // } else
-//     if (score[iteratorBar].length === iteratorNote + 1) {
-//         iteratorNote = 0;
-//         if (score.length !== iteratorBar + 1) {
-//             iteratorBar++;
-//         } else {
-//             setTimeout(stopPlaying, 1000);
-//         }
-//     } else {
-//         iteratorNote++;
-//     }
-
-//     return nextNote;
-// }
-// function getKeyByValue(object, value) {
-//     return Object.keys(object).find((key) => object[key] === value);
-// }
