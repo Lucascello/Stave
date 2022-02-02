@@ -47,7 +47,7 @@
         a4: "a/4",
         bb4: "a#/4",
         b4: "b/4",
-        cb5: "c/5",
+        cb5: "cb/5",
         c5: "c/5",
         db5: "c#/5",
         d5: "d/5",
@@ -258,19 +258,26 @@
         let noteToBePlayed = getNextNote();
 
         // calculate the lenght of the first note in milliseconds
-        updateCurrentNoteDuration(noteToBePlayed.duration);
-        console.log("play duration of the song:", playDuration);
+        updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
+        console.log("play duration of the note:", playDuration);
 
         interval = setInterval(() => {
-            //if (nota_atual_nao_eh_pausa) {
+            //if (actual note is not a rest) {
             const noteAudio = document.getElementById(
                 getKeyByValue(noteName, noteToBePlayed.keys)
             );
+            console.log("This is the note for the player to play: ", noteAudio);
+
             noteAudio.play();
             //}
 
             noteToBePlayed = getNextNote(); // pass the value of the next note
-            updateCurrentNoteDuration(noteToBePlayed.duration);
+            updateCurrentNoteDuration(finishedBar[noteToBePlayed.duration]);
+            console.log("CHECKING THE PLAYDURATION:", playDuration);
+            console.log(
+                "CHECKING THE DURATION OF MY NEXT NOTE:",
+                finishedBar[noteToBePlayed.duration]
+            );
         }, playDuration);
     }
 
@@ -279,10 +286,12 @@
         interval = null;
     }
 
+    let noteLength = finishedBar[duration];
     // calculate the note duration based on the milliseconds
     function updateCurrentNoteDuration(noteDuration) {
         // example: 666 * 2 (in case it's a half note) = 1332 milissegundos
-        playDuration = bpmMilliseconds * finishedBar[noteDuration]; // currentBar my finishedBar object
+        playDuration = bpmMilliseconds * noteDuration; // currentBar my finishedBar object
+        console.log("noteDuration", noteDuration);
     }
 
     let iteratorBar = 0;
@@ -294,20 +303,27 @@
         }
         console.log("what's the lenght of my score:", score);
         console.log(
-            "iteratorBar e ******** iteratorNote: ",
+            "My iteratorBar and ******** iteratorNote: ",
             iteratorBar,
             iteratorNote
         );
         const nextNote = score[iteratorBar][iteratorNote];
-        if (score)
-            if (score[iteratorBar].length === iteratorNote + 1) {
-                iteratorNote = 0;
-                if (score.length !== iteratorBar + 1) {
-                    iteratorBar++;
-                }
-            } else {
-                iteratorNote++;
+        // if (
+        //     score.length === iteratorBar + 1 &&
+        //     score[iteratorBar].length === iteratorNote + 1
+        // ) {
+        //     console.log("stop playing: ");
+        //     stopPlaying();
+        //     return false;
+        // } else
+        if (score[iteratorBar].length === iteratorNote + 1) {
+            iteratorNote = 0;
+            if (score.length !== iteratorBar + 1) {
+                iteratorBar++;
             }
+        } else {
+            iteratorNote++;
+        }
 
         return nextNote;
     }
