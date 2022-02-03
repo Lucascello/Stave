@@ -51,7 +51,7 @@ if (process.env.NODE_ENV == "production") {
     });
 }
 
-//app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -98,6 +98,7 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
     const { first, last, email, password } = req.body;
+    console.log("req.body:", req.body);
     hash(password)
         .then((hashedPw) => {
             console.log("hashedPWd :", hashedPw);
@@ -112,7 +113,7 @@ app.post("/register", (req, res) => {
                 });
         })
         .catch((err) => {
-            // console.log("2nd err in hash", err);
+            console.log("2nd err in hash", err);
             return res.render("register", { addUsersInfoError: true });
         });
 });
@@ -165,5 +166,3 @@ app.get("*", (req, res) => {
 app.listen(process.env.PORT || 8080, () =>
     console.log("staves server listening")
 );
-
-// app.listen(8080, () => console.log("petition-project server listening"));
