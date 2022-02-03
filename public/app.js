@@ -1,10 +1,10 @@
 (function () {
     const keyss = document.querySelectorAll(".key");
     const symbols = document.querySelectorAll(".symbol");
-    const save = document.getElementById("button");
+    const save = document.getElementById("saveButton");
     const playButton = document.querySelector(".play");
     const stopButton = document.querySelector(".stop");
-    const clearButton = document.querySelector(".clear");
+    const clearButton = document.querySelector(".erase");
     let currentAudio;
     let duration = "q";
     let score = [];
@@ -109,14 +109,17 @@
             el.classList.remove("active");
         });
         symbol.classList.add("active");
-        console.log("note duration:", duration);
+        // console.log("note duration:", duration);
     }
 
     ////////////////////////////// clear the music sheet //////////////////////////////
+    // console.log("clearbTN", clearButton);
 
-    clearButton.addEventListener("click", function () {
-        location.reload();
-    });
+    if (clearButton) {
+        clearButton.addEventListener("click", function clearPage() {
+            location.reload();
+        });
+    }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
     const VF = Vex.Flow;
@@ -162,9 +165,9 @@
         const notes = [];
         // console.log("My notes to add to the bar", ...arguments);
         for (index in arguments) {
-            console.log("index:", index);
+            // console.log("index:", index);
             const arg = arguments[index];
-            console.log("arg: ", arg);
+            // console.log("arg: ", arg);
             //checar todos os elementos (args)
             //arg é um [{}, {}, {}]
             if (
@@ -189,7 +192,7 @@
                 );
             }
         }
-        console.log("notes: ", notes);
+        // console.log("notes: ", notes);
         return notes;
     }
 
@@ -208,33 +211,33 @@
     }
 
     function addNoteToBar(key) {
-        console.log(
-            "name of the note I'm playing: ",
-            noteName[currentAudio.id]
-        );
-        console.log("finished bar:", finishedBar[duration]);
+        // console.log(
+        //     "name of the note I'm playing: ",
+        //     noteName[currentAudio.id]
+        // );
+        // console.log("finished bar:", finishedBar[duration]);
 
         let currentNote = {
             keys: noteName[currentAudio.id],
             duration: duration,
         };
 
-        console.log("currentNote: ", currentNote);
+        // console.log("currentNote: ", currentNote);
 
         if (sumTempBarDuration + finishedBar[duration] <= 4) {
             sumTempBarDuration += finishedBar[duration];
-            console.log("##############", sumTempBarDuration);
+            // console.log("##############", sumTempBarDuration);
             tempBar.push(currentNote);
-            console.log("my tempbar: ", tempBar);
+            // console.log("my tempbar: ", tempBar);
             if (sumTempBarDuration === 4) {
-                console.log("currentBar*********:", currentBar);
+                // console.log("currentBar*********:", currentBar);
                 drawNotesInTheBar(
                     createNotesToInsertInTheBar(...tempBar),
                     currentBar
                 );
                 currentBar++;
                 score.push(tempBar);
-                console.log("my new score: ", score);
+                // console.log("my new score: ", score);
                 sumTempBarDuration = 0;
                 tempBar = [];
             }
@@ -274,11 +277,11 @@
         noteAudio.currentTime = 0;
         if (currentAudio) {
             currentAudio.pause();
-            console.log("last note played before current one: ", currentAudio);
+            // console.log("last note played before current one: ", currentAudio);
         }
         noteAudio.play();
-        console.log("This is the note for the player to play: ", noteAudio);
-        console.log("playing the note: ", note, Date.now());
+        // console.log("This is the note for the player to play: ", noteAudio);
+        // console.log("playing the note: ", note, Date.now());
         done();
     };
 
@@ -296,7 +299,7 @@
     function updateCurrentNoteDuration(noteDuration) {
         // example: 666 * 2 (in case it's a half note) = 1332 milissegundos
         playDuration = bpmMilliseconds * noteDuration; // currentBar my finishedBar object
-        console.log("noteDuration", noteDuration);
+        // console.log("noteDuration", noteDuration);
     }
 
     function getKeyByValue(object, value) {
@@ -311,7 +314,21 @@
 
     function saveMusicSheet() {
         let name = prompt("Name your composition");
-        console.log(name);
-        console.log("valor do score: ", score);
+
+        score.unshift(name);
+        console.log("Score with name:", score);
+        // console.log("score in JSON: ", JSON.stringify(score));
+
+        fetch("/home", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(score),
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                console.log(" data from the score:", data);
+            });
     }
 })();

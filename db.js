@@ -32,11 +32,6 @@ module.exports.getPasswords = (email) => {
     return db.query(q, [email]);
 };
 
-// module.exports.getDataToEditProfile = (userId) => {
-//     const q = `SELECT * FROM users FULL JOIN user_profiles ON users.id = user_profiles.user_id WHERE users.id = $1`;
-//     return db.query(q, [userId]);
-// };
-
 module.exports.updateUsersInfoSimple = (firstName, lastName, email, userId) => {
     const q = `UPDATE users SET first = $1, last = $2, email = $3  WHERE users.id = $4`;
     const params = [firstName, lastName, email, userId];
@@ -56,3 +51,4 @@ module.exports.addScore = (user_id, name, score) => {
     const params = [user_id, name, score];
     return db.query(q, params);
 };
+

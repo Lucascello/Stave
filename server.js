@@ -51,7 +51,8 @@ if (process.env.NODE_ENV == "production") {
     });
 }
 
-app.use(express.urlencoded({ extended: false }));
+//app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", (req, res) => {
     console.log("I have an userId for scores :", req.session.userId);
@@ -72,16 +73,20 @@ app.get("/score", (req, res) => {
 });
 
 app.post("/home", (req, res) => {
-    // console.log("post/petition");
-    const { user_id, name, score } = req.body;
+    const name = req.body.shift();
+    const score = JSON.stringify(req.body);
+    console.log("The name of the piece:", name);
+    console.log("the score for the db:", score);
+    console.log("Whos the user", req.session.userId);
 
-    db.addScore(user_id, name, score)
-        .then(({ rows }) => {
-            // res.redirect("/thanks");
-        })
-        .catch((err) => {
-            res.render("home", { saveScoreError: true });
-        });
+    db.addScore(req.session.userId, name, score).then(({ rows }) => {
+        console.log("rows in home", rows);
+        // res.redirect("/thanks");
+        // res.redirect("/home");
+    });
+    // .catch((err) => {
+    //     res.render("home", { saveScoreError: true });
+    // });
 });
 
 app.get("/register", (req, res) => {
@@ -158,7 +163,7 @@ app.get("*", (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () =>
-    console.log("petition-project server listening")
+    console.log("staves server listening")
 );
 
 // app.listen(8080, () => console.log("petition-project server listening"));
