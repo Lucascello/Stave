@@ -2,6 +2,7 @@
     const keyss = document.querySelectorAll(".key");
     const symbols = document.querySelectorAll(".symbol");
     const save = document.getElementById("saveButton");
+    const print = document.getElementById("print");
     const playButton = document.querySelector(".play");
     const stopButton = document.querySelector(".stop");
     const clearButton = document.querySelector(".erase");
@@ -116,9 +117,11 @@
     // console.log("clearbTN", clearButton);
 
     if (clearButton) {
-        clearButton.addEventListener("click", function clearPage() {
-            location.reload();
-        });
+        clearButton.addEventListener("click", clearPage);
+    }
+
+    function clearPage() {
+        location.reload();
     }
 
     /////////////////////////////// creating the staves ///////////////////////////////////////
@@ -306,6 +309,21 @@
         return Object.keys(object).find((key) => object[key] === value);
     }
 
+    /////////////////////////////// printing sheet //////////////////////////
+
+    print.addEventListener("click", printDiv);
+
+    function printDiv() {
+        var divContents = document.getElementById("container").innerHTML;
+        var a = window.open("", "", "height=500, width=500");
+        a.document.write("<html>");
+        a.document.write("<body > <h1>Your Masterpiece <br>");
+        a.document.write(divContents);
+        a.document.write("</body></html>");
+        a.document.close();
+        a.print();
+    }
+
     /////////////////////////////// saving music sheet /////////////////////////////
 
     if (save) {
@@ -329,6 +347,11 @@
             .then((data) => data.json())
             .then((data) => {
                 console.log(" data from the score:", data);
+                if (data.success) {
+                    clearPage();
+                } else {
+                    console.log("I suck");
+                }
             });
     }
 })();

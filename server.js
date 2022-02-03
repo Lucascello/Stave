@@ -79,14 +79,14 @@ app.post("/home", (req, res) => {
     console.log("the score for the db:", score);
     console.log("Whos the user", req.session.userId);
 
-    db.addScore(req.session.userId, name, score).then(({ rows }) => {
-        console.log("rows in home", rows);
-        // res.redirect("/thanks");
-        // res.redirect("/home");
-    });
-    // .catch((err) => {
-    //     res.render("home", { saveScoreError: true });
-    // });
+    db.addScore(req.session.userId, name, score)
+        .then(({ rows }) => {
+            console.log("rows in home", rows);
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            res.render("home", { saveScoreError: true });
+        });
 });
 
 app.get("/register", (req, res) => {
