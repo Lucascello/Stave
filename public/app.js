@@ -354,4 +354,17 @@
                 }
             });
     }
+
+    //////////////////// visualizing saved sheet //////////////
+
+    // function seeMusicSheet() {
+    //     fetch("/score")
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             console.log("data on score: ", data);
+    //         })
+    //         .catch((err) => {
+    //             console.log("error on score :", err);
+    //         });
+    // }
 })();

@@ -53,6 +53,6 @@ module.exports.addScore = (user_id, name, score) => {
 };
 
 module.exports.getScore = () => {
-    const q = "SELECT COUNT(*) FROM scores";
+    const q = "SELECT * FROM scores";
     return db.query(q);
 };
