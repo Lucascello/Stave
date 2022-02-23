@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 (function () {
     const keyss = document.querySelectorAll(".key");
     const symbols = document.querySelectorAll(".symbol");
@@ -6,6 +7,7 @@
     const playButton = document.querySelector(".play");
     const stopButton = document.querySelector(".stop");
     const clearButton = document.querySelector(".erase");
+    const sheets = document.querySelector(".sheets");
     let currentAudio;
     let duration = "q";
     let score = [];
@@ -169,6 +171,7 @@
         // console.log("My notes to add to the bar", ...arguments);
         for (index in arguments) {
             // console.log("index:", index);
+            // eslint-disable-next-line no-undef
             const arg = arguments[index];
             // console.log("arg: ", arg);
             //checar todos os elementos (args)
@@ -356,6 +359,11 @@
     }
 
     //////////////////// visualizing saved sheet //////////////
+
+    // if (sheets) {
+    //     sheets.addEventListener("click", seeMusicSheet);
+    // }
+    // // sheets.addEventListener("click", seeMusicSheet);
 
     // function seeMusicSheet() {
     //     fetch("/score")

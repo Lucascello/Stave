@@ -72,10 +72,11 @@ app.post("/home", (req, res) => {
 
     db.addScore(req.session.userId, name, score)
         .then(({ rows }) => {
-            // console.log("rows in home", rows);
+            console.log("rows in home", rows);
             res.json({ success: true });
         })
         .catch((err) => {
+            console.log(err);
             res.render("home", { saveScoreError: true });
         });
 });
@@ -146,17 +147,17 @@ app.post("/login", (req, res) => {
 
 // app.get("/score", (req, res) => {
 //     console.log("do I have an userId on score/ :", req.session);
-//     console.log("do I have a body on score/ :", JSON.parse(req.body.score));
+//     console.log("do I have a body on score/ :", req.body.score);
 //     console.log("do I have params on score/ :", req.params);
 
 //     const { name, score } = req.body;
 
 //     db.getScore(name, score);
-//     // if (req.session.userId) {
-//     //     return res.render("score", { layout: "main" });
-//     // } else {
-//     //     return res.redirect("/register");
-//     // }
+//     if (req.session.userId) {
+//         return res.render("score", { layout: "main" });
+//     } else {
+//         return res.redirect("/register");
+//     }
 // });
 
 app.get("/logout", (req, res) => {
