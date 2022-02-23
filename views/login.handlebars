@@ -1,26 +1,36 @@
 </div>
 <div class="keyboard">
-    <div class="light"><h6 class="clef">&#119070;</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>S</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>T</h6></div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">&#119074;</div>
+    </div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">S</div>
+        <div class="name">T</div>
+        <div class="name">A</div>
+        <div class="name">V</div>
+        <div class="name">E</div>
+    </div>
+    <div class="light"></div>
     <div class="light register">
     {{#if getPasswordsError}}<h5>Something
             <br />
             went wrong
         </h5>{{/if}}
-    <form method="POST">
+        <div class="form">
+            <form method="POST">
         <br /><br /> <br /><br />
-        <h3> Please log in!
+        <h3 class="form"> Please log in!
             <br /> <br />
-    <a class="click" href="/register">Return To
+    <a class="click form" href="/register">Return To
         <br />
         Registration</a>
         <br /><br />
         </h3>
         <h4 class="form">Email Address</h4>
-                <input
+        <div class="form">
+            <input
                     type="email"
                     id="sign"
                     name="email"
@@ -29,8 +39,11 @@
                     autocomplete="off"
                     required
                 />
-                <h4>Password</h4>
-                <input
+        </div>
+                
+                <h4 class="form">Password</h4>
+                <div class="form">
+                    <input
                     type="password"
                     id="sign"
                     name="password"
@@ -40,20 +53,28 @@
                     autocomplete="off"
                     required
                 />
-            <br /> <br /> <br />
+                </div>
+                
+            <br /> <br />
             <div class="button">
                 <button class="log">Log In</button>
             </div>
-            
-            <br /> <br /> <br />
         </form>
-        <h6 class="letter">A</h6>
+        </div>
+    
+        
     </div>
-    <div class="light"><h6>V</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>E</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>&#119074;</h6></div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">S</div>
+        <div class="name">T</div>
+        <div class="name">A</div>
+        <div class="name">V</div>
+        <div class="name">E</div>
+    </div>
+    <div class="light"></div>
+    <div class="dark logo"><div class="name">&#119070;</div></div>
+    <div class="light"></div>
 </div>
 
 <footer>

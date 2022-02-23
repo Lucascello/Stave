@@ -1,83 +1,110 @@
 <div class="keyboard">
-    <div class="light"><h6 class="clef">&#119070;</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>S</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>T</h6></div>
-    <div class="light register">
-        {{#if addUsersInfoError}}<h5>Something
-                <br />
-                went wrong.</h5>{{/if}}
-        <form method="POST">
-            <br />
-            <h3 class="form">
-                If you have
-                <br />
-                already registered,
-                <br />
-                please
-                <a class="click" href="/login"> login </a>
-            </h3>
-
-            <h4 class="form">First Name</h4>
-            <input
-                type="text"
-                id="first"
-                name="first"
-                placeholder=""
-                value=""
-                autocomplete="off"
-                required
-            />
-
-            <h4>Last Name</h4>
-            <input
-                type="text"
-                id="last"
-                name="last"
-                placeholder=""
-                value=""
-                autocomplete="off"
-                required
-            />
-
-            <h4>Email Address</h4>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder=""
-                value=""
-                autocomplete="off"
-                required
-            />
-
-            <h4>Password</h4>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                minlength="6"
-                placeholder=""
-                value=""
-                autocomplete="off"
-                required
-            />
-
-            <br />
-            <br />
-            <div class="button">
-                <button>Register</button>
-            </div>
-
-        </form>
-        <h6 class="letterA">A</h6>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">&#119074;</div>
     </div>
-    <div class="light"><h6>V</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>E</h6></div>
-    <div class="dark"></div>
-    <div class="light"><h6>&#119074;</h6></div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">S</div>
+        <div class="name">T</div>
+        <div class="name">A</div>
+        <div class="name">V</div>
+        <div class="name">E</div>
+    </div>
+    <div class="light"></div>
+    <div class="light register">
+        <div class="form">
+            {{#if addUsersInfoError}}<h5>Something
+                    <br />
+                    went wrong.</h5>{{/if}}
+            <form method="POST">
+                <br />
+                <br />
+                <br />
+                <h7 class="formi">
+                    <b>If you have already</b>
+                    <b>registered, please</b>
+
+                </h7>
+                <br />
+                <a class="click form" href="/login"> login </a>
+
+                <h4 class="form">First Name</h4>
+                <div class="form">
+                    <input
+                        type="text"
+                        id="first"
+                        name="first"
+                        placeholder=""
+                        value=""
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+
+                <h4 class="form">Last Name</h4>
+                <div class="form">
+                    <input
+                        type="text"
+                        id="last"
+                        name="last"
+                        placeholder=""
+                        value=""
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+
+                <h4 class="form">Email Address</h4>
+                <div class="form">
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder=""
+                        value=""
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+
+                <h4 class="form">Password</h4>
+                <div class="form">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        minlength="6"
+                        placeholder=""
+                        value=""
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+
+                <br />
+                <br />
+                <div class="button">
+                    <button>Register</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">S</div>
+        <div class="name">T</div>
+        <div class="name">A</div>
+        <div class="name">V</div>
+        <div class="name">E</div>
+    </div>
+    <div class="light"></div>
+    <div class="dark logo">
+        <div class="name">&#119070;</div>
+    </div>
+    <div class="light"></div>
 </div>
 
 <footer>
